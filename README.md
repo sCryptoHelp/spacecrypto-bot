@@ -137,8 +137,8 @@ qtd_spaceships
 
 ```
 Uma dica:
-   Informe nessa configuração 1/3 da quantidade total de Naves que você em sua Conta.
-   Por Exemplo: Tenho 45 naves. (45/3)=15. Vou configurar para Enviar 15 naves.
+   Informe nessa configuração 1/3 da quantidade total de Naves que você tem em sua Conta.
+   Por Exemplo: Tenho 45 naves, (45/3)=15, vou configurar para Enviar 15 naves.
    Dessa forma o Bot só deixa ficar atacando o Boss se o numero definido de naves for atingido.
 ```
 

@@ -5,7 +5,7 @@ Um Bot de código aberto, para que qualquer pessoal possa utilizar e colaborar c
 
 ## ♥ Doações sempre serão bem-vindas ♥
 
-- Wallet Smart Chain (BUSD/BNB/BCOIN): `0xCD1A7A05DC2ee5d0CcB38a4e653e81A4CA78657c`
+- Wallet Smart Chain (BUSD/BNB/BCOIN/SPG): `0xCD1A7A05DC2ee5d0CcB38a4e653e81A4CA78657c`
 - Chave Pix: `8c3b043a-b2c0-44df-a90d-41b3f4294614`
 
 ![alt text](https://github.com/sCriptoHelp/spacecrypto-bot/blob/main/readme-doc/Pix.png?raw=true)
@@ -89,6 +89,7 @@ pip install --upgrade pip
 - Abra o Navegador e acesse o Site do Space Crypto e conecte a sua Metamask;
 
 - Abra a pasta salva no C:/spacecrypto-bot e execute o arquivo:  _Iniciar.bot_ 
+
 ![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/IniciarBat.PNG?raw=true)
 
 - Minimize a tela do bot e deixe a tela do navegador com o Space Crypto aberta;
@@ -151,14 +152,9 @@ Após toda alteração salve o arquivo e reinicie o Bot.
 ![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/navegador.png?raw=true)
 
 
-
-
-
-
-
 # Gostou do conteúdo, então já sabe o que fazer! 😉🤩
 
-- Wallet Smart Chain (BUSD/BNB/BCOIN): `0xCD1A7A05DC2ee5d0CcB38a4e653e81A4CA78657c`
+- Wallet Smart Chain: `0xCD1A7A05DC2ee5d0CcB38a4e653e81A4CA78657c`
 - Chave Pix: `8c3b043a-b2c0-44df-a90d-41b3f4294614`
 
 ## 📄 Licença

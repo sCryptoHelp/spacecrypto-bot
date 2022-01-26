@@ -13,12 +13,15 @@ Um Bot de código aberto, para que qualquer pessoal possa utilizar e colaborar c
 ## Instalação
 
 Baixe e instale o Python v3.10+ pelo site: [https://www.python.org/downloads/](https://www.python.org/downloads/)
+
 ![alt text](https://github.com/sCriptoHelp/spacecrypto-bot/blob/main/readme-doc/python.png?raw=true)
 
 Se você baixar pelo site é importante marcar a opção para adicionar o python ao PATH:
+
 ![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/01.png?raw=true)
 
 Selecione a opção "Customize installation"
+
 ![alt text](https://github.com/sCriptoHelp/spacecrypto-bot/blob/main/readme-doc/02.png?raw=true)
 
 "Next"

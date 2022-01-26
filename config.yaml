@@ -25,10 +25,12 @@
 
     # [en_US] Inform here the amount of Ships to send to Fight
     # Change to the amount of Ships you want to send to Fight
+    # A recommendation is to put 1/3 of the total Ships in the account.
     # Default value: 15
     #
     # [pt_BR] Informe aqui a quantidade de Naves enviar para Lutar
     # Altere para a quantidade de Naves que deseja enviar para Lutar
+    # Uma recomendação é colocar 1/3 do total de Naves da conta.
     # Valor padrão: 15
     qtd_send_spaceships: 15
 

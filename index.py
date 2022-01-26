@@ -317,10 +317,7 @@ def refreshSpaceships():
         goToFight()
     else:
         goToFight()
-        time.sleep(3)
-        returnBase()
-        time.sleep(2)
-        refreshSpaceships()
+        endFight()
 
 def goToFight():
     clickBtn(images['spg-go-to-boss'])

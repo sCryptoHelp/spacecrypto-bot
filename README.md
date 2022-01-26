@@ -134,6 +134,14 @@ Algumas configurações precisam  ser alteradas no arquivo "config.yaml".
 qtd_spaceships
 ```
 - Recomendado configurar a quantidade de naves que serão enviadas para lutar.
+
+```
+Uma dica:
+   Informe nessa configuração 1/3 da quantidade total de Naves que você em sua Conta.
+   Por Exemplo: Tenho 45 naves. (45/3)=15. Vou configurar para Enviar 15 naves.
+   Dessa forma o Bot só deixa ficar atacando o Boss se o numero definido de naves for Atigido.
+```
+
  ```
 qtd_send_spaceships
 ```

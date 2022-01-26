@@ -247,10 +247,19 @@ def removeSpaceships():
 
     while True: 
         buttons = positions(images['spg-x'], threshold=ct['remove_to_work_btn'])
-       
-        for (x, y, w, h) in buttons:
-            moveToWithRandomness(x+(w/2),y+(h/2),1)
-            pyautogui.click()
+
+        buttonsNewOrder = []
+
+        if len(buttons) > 0:
+            index = len(buttons)
+
+            while index > 0:
+                index -= 1
+                buttonsNewOrder.append(buttons[index])
+
+            for (x, y, w, h) in buttonsNewOrder:
+                moveToWithRandomness(x+(w/2),y+(h/2),1)
+                pyautogui.click()
 
         if len(buttons) == 0:
             break

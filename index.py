@@ -30,7 +30,7 @@ msg = """
 
 
 print(msg)
-time.sleep(2)
+time.sleep(3)
 
 
 if __name__ == '__main__':
@@ -380,15 +380,16 @@ def main():
         now = time.time()
         
         for last in windows:
-            if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=1):
-                time.sleep(2) 
+
+                    
+            if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
                 processLogin() 
             else:
                 if len(positions(images['spg-home'], threshold=ct['base_position']))  > 0:
                     removeSpaceships()
                     refreshSpaceships()
 
-            if clickBtn(images['spg-confirm'], name='okBtn', timeout=1):
+            if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
                 time.sleep(2) 
                 endFight()
 
@@ -413,7 +414,7 @@ def main():
         
             checkClose()
 
-             spg_surrender =  positions(images['spg-surrender'], threshold=ct['end_boss'])  
+            spg_surrender =  positions(images['spg-surrender'], threshold=ct['end_boss'])  
             if len(spg_surrender) > 0:
 
                 cont = ct['check_boss']
@@ -449,7 +450,6 @@ def main():
 
                     if len(nowPosition) == 0:
                         last["checkBossTime"] = now
-                        
             
 main()
 

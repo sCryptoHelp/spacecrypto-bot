@@ -1,4 +1,4 @@
-# 🚀 Space Crypto 🚀
+# 🚀 Bot para o Space Crypto 🚀
 ## _Proporcionando Boas Noites de sono 😴_
 
 Um Bot de código aberto, para que qualquer pessoal possa utilizar e colaborar com updates.

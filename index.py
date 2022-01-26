@@ -187,7 +187,7 @@ def login():
         # sometimes the sign popup appears imediately
         login_attempts = login_attempts + 1
 
-        if len(positions(images['spg-home'], threshold=ct['base_position']))  > 0:
+        if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
            login_attempts = 0
            refreshSpaceships()
         return
@@ -336,7 +336,7 @@ def endFight():
     if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
         time.sleep(ct['check_processing_time']) 
 
-    if len(positions(images['spg-home'], threshold=ct['base_position']))  > 0:
+    if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
         removeSpaceships()
         time.sleep(1) 
         refreshSpaceships()
@@ -389,12 +389,11 @@ def main():
         now = time.time()
         
         for last in windows:
-
-                    
+    
             if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
                 processLogin() 
             else:
-                if len(positions(images['spg-home'], threshold=ct['base_position']))  > 0:
+                if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
                     removeSpaceships()
                     refreshSpaceships()
 

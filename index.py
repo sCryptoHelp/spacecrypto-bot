@@ -30,7 +30,7 @@ msg = """
 
 
 print(msg)
-time.sleep(3)
+time.sleep(2)
 
 
 if __name__ == '__main__':
@@ -380,9 +380,40 @@ def main():
         now = time.time()
         
         for last in windows:
+            if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=1):
+                time.sleep(2) 
+                processLogin() 
+            else:
+                if len(positions(images['spg-home'], threshold=ct['base_position']))  > 0:
+                    removeSpaceships()
+                    refreshSpaceships()
 
-            
-            spg_surrender =  positions(images['spg-surrender'], threshold=ct['end_boss'])  
+            if clickBtn(images['spg-confirm'], name='okBtn', timeout=1):
+                time.sleep(2) 
+                endFight()
+
+            if clickBtn(images['spg-confirm-victory'], name='okVicBtn', timeout=1):
+               pass
+
+            if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
+                time.sleep(ct['check_processing_time']) 
+                if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
+                    refreshPage()
+                    processLogin()
+                
+
+            if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
+                if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
+                    refreshPage()
+                    time.sleep(3) 
+                    processLogin()
+                else:
+                    last["CheckInitialPage"] = now
+                    pass
+        
+            checkClose()
+
+             spg_surrender =  positions(images['spg-surrender'], threshold=ct['end_boss'])  
             if len(spg_surrender) > 0:
 
                 cont = ct['check_boss']
@@ -419,38 +450,6 @@ def main():
                     if len(nowPosition) == 0:
                         last["checkBossTime"] = now
                         
-                    
-            if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
-                processLogin() 
-            else:
-                if len(positions(images['spg-home'], threshold=ct['base_position']))  > 0:
-                    removeSpaceships()
-                    refreshSpaceships()
-
-            if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
-                time.sleep(2) 
-                endFight()
-
-            if clickBtn(images['spg-confirm-victory'], name='okVicBtn', timeout=1):
-               pass
-
-            if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-                time.sleep(ct['check_processing_time']) 
-                if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-                    refreshPage()
-                    processLogin()
-                
-
-            if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
-                if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
-                    refreshPage()
-                    time.sleep(3) 
-                    processLogin()
-                else:
-                    last["CheckInitialPage"] = now
-                    pass
-        
-            checkClose()
             
 main()
 

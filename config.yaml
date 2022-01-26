@@ -1,0 +1,153 @@
+---
+
+  # [en_US] Time intervals configuration
+  #
+  time_intervals:
+    
+    # [en_US] Time interval between moviments
+    # Default value (in seconds): 1 
+    #
+    # [pt_BR] Intervalo de tempo entre movimentos
+    # Valor padrão (em segundos): 1
+    interval_between_moviments: 1
+
+  # [en_US] How confident the bot needs to be to click the buttons (values from 0 to 1. 0 is the minimum value, 1 is the maximum value)
+  #
+  # [pt_BR] O quão confiante o bot precisa estar para clicar nos botões (valores entre 0 e 1. 0 é o valor mínimo, 1 é o valor máximo)
+  #
+  threshold:
+
+    # ============================================================ #
+    # [en_US] Start - Edit this area according to your account configuration
+    #
+    # [pt_BR] Inicio - Edite essa area conforme a configuração de sua conta
+    # ============================================================ #
+
+    # [en_US] Inform here the amount of Ships to send to Fight
+    # Change to the amount of Ships you want to send to Fight
+    # Default value: 15
+    #
+    # [pt_BR] Informe aqui a quantidade de Naves enviar para Lutar
+    # Altere para a quantidade de Naves que deseja enviar para Lutar
+    # Valor padrão: 15
+    qtd_send_spaceships: 15
+
+    # [en_US] Inform here the total amount of Ships that exist in the Account
+    #
+    # [pt_BR] Informe aqui Quantidade Total de Naves que existem na Conta
+    qtd_spaceships: 45
+
+    # ============================================================ #
+    # [en_US] End - Edit this area according to your account configuration
+    #
+    # [pt_BR] Fim - Edite essa area conforme a configuração de sua conta
+    # ============================================================ #
+
+    # [en_US]
+    # Default value: 0.7
+    #
+    # [pt_BR]
+    # Valor padrão: 0.7
+    default: 0.7
+
+    # [en_US]
+    # Default value: 0.8
+    #
+    # [pt_BR]
+    # Valor padrão: 0.8
+    commom: 0.8
+
+    # [en_US]
+    # Default value: 0.8
+    #
+    # [pt_BR]
+    # Valor padrão: 0.8
+    select_wallet_buttons: 0.8
+
+    # [en_US]
+    # Default value: 0.9
+    #
+    # [pt_BR]
+    # Valor padrão: 0.9
+    go_to_work_btn: 0.9
+
+    # [en_US]
+    # Default value: 0.9
+    #
+    # [pt_BR]
+    # Valor padrão: 0.9
+    remove_to_work_btn: 0.9
+
+    # [en_US]
+    # Default value: 0.9
+    #
+    # [pt_BR]
+    # Valor padrão: 0.9
+    end_boss: 0.9
+
+    # [en_US]
+    # Default value: 0.9
+    #
+    # [pt_BR]
+    # Valor padrão: 0.9
+    base_position: 0.9
+
+    # [en_US]
+    # Default value: 0.9
+    #
+    # [pt_BR]
+    # Valor padrão: 0.9
+    commom_position: 0.9
+
+    # [en_US]
+    # Processing time in seconds
+    # Default value: 40
+    #
+    # [pt_BR]
+    # Tempo em segundos para Processar
+    # Valor padrão: 40
+    check_processing_time: 40
+
+    # [en_US]
+    # Number of times to validate Boss
+    # Default value: 6
+    #
+    # [pt_BR]
+    # Quantidade de vezes validar Boss
+    # Valor padrão: 6
+    check_boss: 6
+
+    # [en_US]
+    # Time wait Initial Page in seconds
+    # Default value: 60
+    #
+    # [pt_BR]
+    # Tempo Esperar Pagina Inicial em Segundos
+    # Valor padrão: 60
+    check_initial_page: 60
+
+  home:
+    enable: False
+
+  # [en_US]
+  # Default value: 3
+  #
+  # [pt_BR]
+  # Valor padrão: 3
+  scroll_attemps: 3
+
+  # [en_US]
+  # Default value: 100
+  #
+  # [pt_BR]
+  # Valor padrão: 100
+  click_and_drag_amount: 100
+
+  # [en_US] Option for save logs to a file (logs.txt)
+  # Default value: False
+  # Available options: False or True
+  #
+  # [pt_BR] Opção para salvar os logs em arquivo (logs.txt)
+  # Valor padrão : False
+  # Opções disponíveis: False ou True
+  save_log_to_file: False

@@ -88,7 +88,8 @@ pip install --upgrade pip
 
 - Abra o Navegador e acesse o Site do Space Crypto e conecte a sua Metamask;
 
-- Abra a pasta salva no C:/spacecrypto-bot e execute o arquivo: _Iniciar.bot_ 
+- Abra a pasta salva no C:/spacecrypto-bot e execute o arquivo:  _Iniciar.bot_ 
+![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/IniciarBat.PNG?raw=true)
 
 - Minimize a tela do bot e deixe a tela do navegador com o Space Crypto aberta;
 
@@ -120,6 +121,11 @@ Para resolver esses problemas caso ocorra, acesse a pasta “targets” e atuali
 Algumas configurações precisam  ser alteradas no arquivo "config.yaml".
 ``
 
+- Para editar o config.yaml, abra em algum editor de texto
+
+![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/open-edit-config.PNG?raw=true)
+
+
 ## O que devo configurar no arquivo "config.yaml"?
 
 - Recomendado configurar a quantidade de naves existentes na conta. 
@@ -131,7 +137,24 @@ qtd_spaceships
 qtd_send_spaceships
 ```
 
+![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/configYaml.png?raw=true)
+
+
 Após toda alteração salve o arquivo e reinicie o Bot. 
+
+
+# Recomendações
+
+- Utilizar o navegador: Chrome
+- Deixe a configuração da cor do navegador na cor padrão
+
+![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/navegador.png?raw=true)
+
+
+
+
+
+
 
 # Gostou do conteúdo, então já sabe o que fazer! 😉🤩
 

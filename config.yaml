@@ -128,6 +128,15 @@
     # Valor padrão: 60
     check_initial_page: 60
 
+    # [en_US]
+    # Time wait Initial Page in minutes
+    # Default value: 2
+    #
+    # [pt_BR]
+    # Tempo Esperar Pagina Inicial em Minutos
+    # Valor padrão: 2
+    check_initial_cube: 2
+
   home:
     enable: False
 

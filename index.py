@@ -189,7 +189,7 @@ def login():
 
         if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
            login_attempts = 0
-           refreshSpaceships()
+           refreshSpaceships(0)
         return
 
     if not clickBtn(images['select-wallet-1-no-hover'], name='selectMetamaskBtn'):
@@ -279,7 +279,7 @@ def clickButtonsFight():
             return -1
     return len(buttons)
 
-def refreshSpaceships():
+def refreshSpaceships(qtd):
 
     logger('Refresh Spaceship to Fight')
 
@@ -296,6 +296,13 @@ def refreshSpaceships():
     empty_scrolls_attempts = qtd_send_spaceships 
       
     checkClose()
+
+    if qtd > 0:
+        hero_clicks = qtd
+        logger('Quantidade ja selecionada {}'.format(hero_clicks))
+        if hero_clicks == qtd_send_spaceships:
+            empty_scrolls_attempts = 0
+            goToFight()
 
     while(empty_scrolls_attempts >0):
         buttonsClicked = clickButtonsFight()
@@ -314,10 +321,11 @@ def refreshSpaceships():
         logger('💪 {} Spaceships sent to Fight'.format(hero_clicks))
 
     if hero_clicks == qtd_send_spaceships:
+        empty_scrolls_attempts = 0
         goToFight()
     else:
-        goToFight()
-        endFight()
+        reloadSpacheship()
+        refreshSpaceships(hero_clicks)
 
 def goToFight():
     clickBtn(images['spg-go-to-boss'])
@@ -336,7 +344,7 @@ def endFight():
     if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
         removeSpaceships()
         time.sleep(1) 
-        refreshSpaceships()
+        refreshSpaceships(0)
     else:
         refreshPage()
 
@@ -366,6 +374,12 @@ def checkClose():
     if clickBtn(images['spg-close'], name='closeBtn', timeout=1):
         processLogin()
 
+def reloadSpacheship():
+    if len(positions(images['spg-base'], threshold=ct['commom_position'])) > 0 and len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
+        clickBtn(images['spg-base'], name='closeBtn', timeout=1)
+        time.sleep(3)
+        clickBtn(images['spg-spaceships-ico'], name='closeBtn', timeout=1)
+        time.sleep(3)
 
 def main():
     time.sleep(5)
@@ -379,6 +393,7 @@ def main():
             "window": w,
             "lessPosition":[],
             "CheckInitialPage":0,
+            "CheckInicialCube":0,
             
             })
 
@@ -386,13 +401,12 @@ def main():
         now = time.time()
         
         for last in windows:
-    
             if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
                 processLogin() 
             else:
                 if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
                     removeSpaceships()
-                    refreshSpaceships()
+                    refreshSpaceships(0)
 
             if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
                 time.sleep(2) 
@@ -407,7 +421,6 @@ def main():
                     refreshPage()
                     processLogin()
                 
-
             if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
                     refreshPage()
@@ -416,11 +429,23 @@ def main():
                 else:
                     last["CheckInitialPage"] = now
                     pass
+            else:
+                last["CheckInitialPage"] = now
+            
+            if len(positions(images['spg-cube'], threshold=ct['commom_position'])) > 0:
+                if now - last["CheckInicialCube"] > addRandomness(ct['check_initial_cube']*60):
+                    refreshPage()
+                    time.sleep(3) 
+                    processLogin()
+                else:
+                    last["CheckInicialCube"] = now
+                    pass
+            else:
+                last["CheckInicialCube"] = now
         
             checkClose()
 
-            spg_surrender =  positions(images['spg-surrender'], threshold=ct['end_boss'])  
-            if len(spg_surrender) > 0:
+            if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
 
                 cont = ct['check_boss']
                 while(cont >0):

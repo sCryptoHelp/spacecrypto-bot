@@ -3,6 +3,8 @@
 
 Um Bot de código aberto, para que qualquer pessoal possa utilizar e colaborar com updates.
 
+![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/Banner.PNG?raw=true)
+
 ## ♥ Doações sempre serão bem-vindas ♥
 
 - Wallet Smart Chain (BUSD/BNB/BCOIN/SPG): `0xCD1A7A05DC2ee5d0CcB38a4e653e81A4CA78657c`

@@ -3,7 +3,7 @@
 
 Um Bot de código aberto, para que qualquer pessoal possa utilizar e colaborar com updates.
 
-![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/Banner.PNG?raw=true)
+[![Watch the video](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/Banner.PNG?raw=true)](https://www.youtube.com/watch?v=M11ubT04vVY)
 
 ## ♥ Doações sempre serão bem-vindas ♥
 
@@ -166,6 +166,9 @@ Após toda alteração salve o arquivo e reinicie o Bot.
 
 - Wallet Smart Chain: `0xCD1A7A05DC2ee5d0CcB38a4e653e81A4CA78657c`
 - Chave Pix: `8c3b043a-b2c0-44df-a90d-41b3f4294614`
+
+## ▶️ Link para Bot em Execução
+[https://youtu.be/M11ubT04vVY](https://youtu.be/M11ubT04vVY)
 
 ## 📄 Licença
 **Free Software!**

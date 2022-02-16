@@ -39,6 +39,33 @@
     # [pt_BR] Informe aqui Quantidade Total de Naves que existem na Conta
     qtd_spaceships: 45
 
+
+    # [en_US]
+    # Wave Limitation - If you want to limit the Wave, change the setting to "True"
+    # Default value: False
+    #
+    # [pt_BR]
+    # Limitação de Wave - Caso deseje limitar as Wave, mude a configuração para True
+    # Valor padrão: False
+    limit_wave: False  
+
+    # [en_US]
+    # Wave Limitation - Enter here the amount of Wave the Bot should play
+    # Default value: 10
+    #
+    # [pt_BR]
+    # Limitação de Wave - Informe aqui a quantidade de Wave que o Bot deve jogar
+    # Valor padrão: 10
+    qtd_limit_wave: 10  
+
+    # [en_US]
+    # Define here if at the end of the Wave Limit the bot should end the fight and reload the ships or just Surrender
+    # Default value: EndFight
+    #
+    # [pt_BR]
+    # Defina aqui se ao final do Wave Limit o bot deve encerrar a luta e recarregar as naves ou apenas Surrender
+    type_limit_wave: 'EndFight' # EndFight or Surrender
+
     # ============================================================ #
     # [en_US] End - Edit this area according to your account configuration
     #
@@ -136,6 +163,15 @@
     # Tempo Esperar Pagina Inicial em Minutos
     # Valor padrão: 2
     check_initial_cube: 2
+
+    # [en_US]
+    # Time wait Fight
+    # Default value: 5
+    #
+    # [pt_BR]
+    # Tempo Esperar Luta
+    # Valor padrão: 5
+    time_limit_fight: 5
 
   home:
     enable: False

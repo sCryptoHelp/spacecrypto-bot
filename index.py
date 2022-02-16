@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-    
+from ast import Return
 from cv2 import cv2
 
 from captcha.solveCaptcha import solveCaptcha
@@ -47,7 +48,7 @@ pyautogui.FAILSAFE = False
 hero_clicks = 0
 login_attempts = 0
 last_log_is_progress = False
-
+count_victory = 0
 
 
 def addRandomness(n, randomn_factor_size=None):
@@ -323,6 +324,8 @@ def refreshSpaceships(qtd):
     if hero_clicks == qtd_send_spaceships:
         empty_scrolls_attempts = 0
         goToFight()
+        checkVictory()
+        surrenderFight()
     else:
         reloadSpacheship()
         refreshSpaceships(hero_clicks)
@@ -331,6 +334,15 @@ def goToFight():
     clickBtn(images['spg-go-to-boss'])
     time.sleep(1)
     clickBtn(images['spg-confirm'])
+
+def surrenderFight():
+    if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
+        clickBtn(images['spg-surrender'])
+        time.sleep(2)
+        clickBtn(images['spg-confirm-surrender'])
+        global count_victory
+        count_victory = 0
+
 
 def endFight():
     logger("End fight")
@@ -381,6 +393,38 @@ def reloadSpacheship():
         clickBtn(images['spg-spaceships-ico'], name='closeBtn', timeout=1)
         time.sleep(3)
 
+def checkVictory():
+    global count_victory
+    if clickBtn(images['spg-confirm-victory'], name='okVicBtn', timeout=1):
+        count_victory += 1 
+        return True
+
+    return False
+
+def checkLimitWave():
+    global count_victory
+
+    limitWave = ct['limit_wave'] 
+    qtdLimitWave = ct['qtd_limit_wave']
+    typeLimitWave = ct['type_limit_wave']
+
+    if(limitWave == True):
+        if(count_victory >= qtdLimitWave):
+            count_victory = 0
+            time.sleep(1) 
+            if(typeLimitWave == 'EndFight'):
+                endFight()
+            else:
+                surrenderFight()
+
+            time.sleep(2) 
+            return True
+        else:
+            checkVictory()
+            return False
+
+    return False
+
 def main():
     time.sleep(5)
     t = c['time_intervals']
@@ -399,7 +443,7 @@ def main():
 
     while True:
         now = time.time()
-        
+                
         for last in windows:
             if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
                 processLogin() 
@@ -412,19 +456,19 @@ def main():
                 time.sleep(2) 
                 endFight()
 
-            if clickBtn(images['spg-confirm-victory'], name='okVicBtn', timeout=1):
-               pass
+            checkVictory()
 
             if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                 time.sleep(ct['check_processing_time']) 
                 if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                     refreshPage()
+                    time.sleep(5) 
                     processLogin()
                 
             if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
                     refreshPage()
-                    time.sleep(3) 
+                    time.sleep(5) 
                     processLogin()
                 else:
                     last["CheckInitialPage"] = now
@@ -435,7 +479,7 @@ def main():
             if len(positions(images['spg-cube'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInicialCube"] > addRandomness(ct['check_initial_cube']*60):
                     refreshPage()
-                    time.sleep(3) 
+                    time.sleep(5) 
                     processLogin()
                 else:
                     last["CheckInicialCube"] = now
@@ -448,39 +492,43 @@ def main():
             if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
 
                 cont = ct['check_boss']
+                                
                 while(cont >0):
                     cont = cont-1
                     nowPosition = lifeBoss()
+                    if(checkLimitWave() == False):
                     
-                    if len(last["lessPosition"]) == 0:
-                        if len(nowPosition) > 0:
-                            last["lessPosition"] = nowPosition
-                            logger("Starting position")
+                        if len(last["lessPosition"]) == 0:
+                            if len(nowPosition) > 0:
+                                last["lessPosition"] = nowPosition
+                                logger("Starting position")
                                                         
-                    else:
-                        if np.array_equal(nowPosition,last["lessPosition"]) == False:
-                            last["lessPosition"] = nowPosition
-                            logger("Updating position")
-                            break
                         else:
-                            if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
-                                time.sleep(2) 
-                                endFight()
+                            if np.array_equal(nowPosition,last["lessPosition"]) == False:
+                                last["lessPosition"] = nowPosition
+                                logger("Updating position")
                                 break
                             else:
-                                if cont == 0:
-                                    logger("End time wait")
+                                if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
+                                    time.sleep(2) 
                                     endFight()
                                     break
                                 else:
-                                    logger("Waiting")
-                                    last["lessPosition"] = nowPosition
-                                    time.sleep(5) 
-                            
+                                    if cont == 0:
+                                        logger("End time wait")
+                                        endFight()
+                                        break
+                                    else:
+                                        logger("Waiting")
+                                        last["lessPosition"] = nowPosition
+
+                                        if(checkLimitWave() == False):
+                                            time.sleep(5) 
+
 
                     if len(nowPosition) == 0:
                         last["checkBossTime"] = now
-            
+
 main()
 
 

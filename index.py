@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-    
+# -*- coding: utf-8 - Lizier -*-    
 from ast import Return
 from cv2 import cv2
 
@@ -325,7 +325,10 @@ def refreshSpaceships(qtd):
         empty_scrolls_attempts = 0
         goToFight()
         checkVictory()
-        surrenderFight()
+
+        #Check IF Type is EndFightAndSurrender for to return to first boss
+        if(ct['type_limit_wave'] == "EndFightAndSurrender"):
+            surrenderFight()
     else:
         reloadSpacheship()
         refreshSpaceships(hero_clicks)
@@ -412,7 +415,7 @@ def checkLimitWave():
         if(count_victory >= qtdLimitWave):
             count_victory = 0
             time.sleep(1) 
-            if(typeLimitWave == 'EndFight'):
+            if(typeLimitWave == 'EndFight' or typeLimitWave == 'EndFightAndSurrender'):
                 endFight()
             else:
                 surrenderFight()

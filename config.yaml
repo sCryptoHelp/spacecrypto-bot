@@ -1,5 +1,5 @@
 ---
-
+  # By Lizier
   # [en_US] Time intervals configuration
   #
   time_intervals:
@@ -45,9 +45,9 @@
     # Default value: False
     #
     # [pt_BR]
-    # Limitação de Wave - Caso deseje limitar as Wave, mude a configuração para True
+    # Limitação de Wave - Caso deseje limitar as Wave, mude a configuração para "True"
     # Valor padrão: False
-    limit_wave: True  
+    limit_wave: False  
 
     # [en_US]
     # Wave Limitation - Enter here the amount of Wave the Bot should play
@@ -56,15 +56,22 @@
     # [pt_BR]
     # Limitação de Wave - Informe aqui a quantidade de Wave que o Bot deve jogar
     # Valor padrão: 10
-    qtd_limit_wave: 6  
+    qtd_limit_wave: 10  
 
     # [en_US]
-    # Define here if at the end of the Wave Limit the bot should end the fight and reload the ships or just Surrender
-    # Default value: EndFight
+    # Define here if at the end of the Wave Limit the bot should end the fight and reload the ships or just Surrender or two Actions.
+    # This option will only work if limit_wave is set to "True"
+    # Options: EndFight - Only Renew ships 
+    #          Surrender - Only Surrender 
+    #          EndFightAndSurrender - Renew ships and Surrender - Retur to first boss
     #
     # [pt_BR]
-    # Defina aqui se ao final do Wave Limit o bot deve encerrar a luta e recarregar as naves ou apenas Surrender
-    type_limit_wave: 'EndFight' # EndFight or Surrender
+    # Defina aqui se ao final do Wave Limit o bot deve encerrar a luta e recarregar as naves ou apenas Surrender ou as duas ações.
+    # Essa opção so vai funcionar se o limit_wave estiver marcado como "True"
+    # Opções: EndFight - Apenas renova as Naves
+    #         Surrender - Apenas desiste da Luta
+    #         EndFightAndSurrender - Renova as Naves e Desiste da Luta - Volta para o 1 Boss
+    type_limit_wave: 'EndFightAndSurrender' # EndFight or Surrender or EndFightAndSurrender
 
     # ============================================================ #
     # [en_US] End - Edit this area according to your account configuration

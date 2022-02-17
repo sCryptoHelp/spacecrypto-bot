@@ -56,7 +56,7 @@
     # [pt_BR]
     # Limitação de Wave - Informe aqui a quantidade de Wave que o Bot deve jogar
     # Valor padrão: 10
-    qtd_limit_wave: 10  
+    qtd_limit_wave: 10
 
     # [en_US]
     # Define here if at the end of the Wave Limit the bot should end the fight and reload the ships or just Surrender or two Actions.

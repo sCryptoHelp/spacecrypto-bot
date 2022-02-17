@@ -438,6 +438,7 @@ def main():
             "lessPosition":[],
             "CheckInitialPage":0,
             "CheckInicialCube":0,
+            "CheckBackPage":0,
             
             })
 
@@ -486,6 +487,19 @@ def main():
                     pass
             else:
                 last["CheckInicialCube"] = now
+            
+
+            if len(positions(images['spg-back'], threshold=ct['commom_position'])) > 0:
+                if now - last["CheckBackPage"] > addRandomness(ct['check_erro']*60):
+                    refreshPage()
+                    time.sleep(5) 
+                    processLogin()
+                else:
+                    last["CheckBackPage"] = now
+                    pass
+            else:
+                last["CheckBackPage"] = now
+            
         
             checkClose()
 

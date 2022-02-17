@@ -47,7 +47,7 @@
     # [pt_BR]
     # Limitação de Wave - Caso deseje limitar as Wave, mude a configuração para True
     # Valor padrão: False
-    limit_wave: False  
+    limit_wave: True  
 
     # [en_US]
     # Wave Limitation - Enter here the amount of Wave the Bot should play
@@ -56,7 +56,7 @@
     # [pt_BR]
     # Limitação de Wave - Informe aqui a quantidade de Wave que o Bot deve jogar
     # Valor padrão: 10
-    qtd_limit_wave: 10  
+    qtd_limit_wave: 6  
 
     # [en_US]
     # Define here if at the end of the Wave Limit the bot should end the fight and reload the ships or just Surrender
@@ -163,6 +163,15 @@
     # Tempo Esperar Pagina Inicial em Minutos
     # Valor padrão: 2
     check_initial_cube: 2
+
+    # [en_US]
+    # Time wait Erro
+    # Default value: 2
+    #
+    # [pt_BR]
+    # Tempo Esperar Erro
+    # Valor padrão: 2
+    check_erro: 2
 
     # [en_US]
     # Time wait Fight

@@ -1,6 +1,10 @@
 # 🚀 Bot para o Space Crypto 🚀
 ## _Proporcionando Boas Noites de sono 😴_
+## Se for copiar para divulgar coloque nosso link nos créditos. 😉
 
+Atualizações 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/releases
+
+## 
 Um Bot de código aberto, para que qualquer pessoal possa utilizar e colaborar com updates.
 
 [![Watch the video](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/Banner.PNG?raw=true)](https://www.youtube.com/watch?v=M11ubT04vVY)

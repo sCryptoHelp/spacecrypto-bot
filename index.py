@@ -428,6 +428,24 @@ def checkLimitWave():
 
     return False
 
+def checkZeroSpacheship():
+    if len(positions(images['spg-surrender'], ct['commom'])) > 0:
+        start = time.time()
+        has_timed_out = False
+        while(not has_timed_out):
+            matches = positions(images['0-15'], ct['commom_position'])
+            if(len(matches)==0):
+                has_timed_out = time.time()-start > 3
+                continue
+            elif(len(matches)>0):
+                clickBtn(images['spg-spaceships-ico'], name='closeBtn', timeout=1)
+                time.sleep(10)
+                removeSpaceships()
+                time.sleep(1) 
+                refreshSpaceships(0)
+                return True
+    return False
+
 def main():
     time.sleep(5)
     t = c['time_intervals']
@@ -461,6 +479,7 @@ def main():
                 endFight()
 
             checkVictory()
+            checkZeroSpacheship()
 
             if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                 time.sleep(ct['check_processing_time']) 

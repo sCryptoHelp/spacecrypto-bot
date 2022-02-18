@@ -269,7 +269,7 @@ def clickButtonsFight():
             return -1
     return len(buttons)
 
-def refreshSpaceships(qtd, surrender = True):
+def refreshSpaceships(qtd, onlyRefresh = False):
 
     logger('Refresh Spaceship to Fight')
 
@@ -316,8 +316,9 @@ def refreshSpaceships(qtd, surrender = True):
         checkVictory()
 
         #Check IF Type is EndFightAndSurrender for to return to first boss
-        if(ct['type_limit_wave'] == 'EndFightAndSurrender' and surrender == True):
+        if ct['limit_wave'] == True and ct['type_limit_wave'] == 'EndFightAndSurrender' and onlyRefresh == False:
             surrenderFight()
+            logger('SURRENDER TRIGGERED!')
     else:
         reloadSpacheship()
         refreshSpaceships(hero_clicks)
@@ -335,11 +336,11 @@ def surrenderFight():
         global count_victory
         count_victory = 0
 
-def endFight(surrender = True):
+def endFight(onlyRefresh = False):
     logger("End fight")
-    time.sleep(3) 
+    time.sleep(3)
     returnBase()
-    time.sleep(15) 
+    time.sleep(15)
 
     if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
         time.sleep(ct['check_processing_time']) 
@@ -347,7 +348,7 @@ def endFight(surrender = True):
     if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
         removeSpaceships()
         time.sleep(1)
-        refreshSpaceships(0, surrender)
+        refreshSpaceships(0, onlyRefresh)
     else:
         refreshPage()
 
@@ -421,7 +422,7 @@ def checkZeroSpacheship():
         if len(positions(images['0-15'], ct['commom_position'])) > 0:
             logger("Spaceships zeradas, tentando reiniciar...")
             time.sleep(2)
-            endFight(False)
+            endFight(True)
 
 def main():
     time.sleep(5)

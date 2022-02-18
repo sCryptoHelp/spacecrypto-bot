@@ -50,6 +50,8 @@ login_attempts = 0
 last_log_is_progress = False
 count_victory = 0
 time_start_bot = time.time()
+count_reloadSpacheship = 0
+
 
 
 def addRandomness(n, randomn_factor_size=None):
@@ -226,6 +228,9 @@ def removeSpaceships():
        
 def clickButtonsFight():
     
+    global count_reloadSpacheship
+    
+    
     if(ct['send_space_only_full'] == True):
         buttons = positions(images['spg-go-fight-100'], threshold=ct['go_to_work_btn'])
         ajustX = 14
@@ -237,7 +242,8 @@ def clickButtonsFight():
 
     qtd_send_spaceships = ct['qtd_send_spaceships']
     
-    for (x, y, w, h) in buttons:
+
+    for (x, y, w, h) in reversed(buttons): #Adjust for click button a little more intelligent 
         moveToWithRandomness(x+ajustX+(w/2),y+ajustY+(h/2),1)
         pyautogui.click()
         global hero_clicks
@@ -246,6 +252,15 @@ def clickButtonsFight():
         if hero_clicks >= qtd_send_spaceships:
             logger('Finish Click Hero')
             return -1
+        
+        if(ct['send_incomplete_team']):
+            if hero_clicks > 0:
+                if hero_clicks >= ct['send_space_min']:
+                    if count_reloadSpacheship >= ct['qtd_check_reloadSpacheship']:
+                        logger('Enviando time mesmo incompleto')
+                        hero_clicks = qtd_send_spaceships 
+                        return -1
+
     return len(buttons)
 
 def refreshSpaceships(qtd):
@@ -302,8 +317,12 @@ def refreshSpaceships(qtd):
         if(ct['type_limit_wave'] == 'EndFightAndSurrender'):
             surrenderFight()
     else:
+        global count_reloadSpacheship
+        count_reloadSpacheship +=1
+
         reloadSpacheship()
         refreshSpaceships(hero_clicks)
+        
 
 def goToFight():
     clickBtn(images['spg-go-to-boss'])
@@ -313,7 +332,7 @@ def goToFight():
 def surrenderFight():
     if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
         clickBtn(images['spg-surrender'])
-        time.sleep(2)
+        time.sleep(1.5)
         clickBtn(images['spg-confirm-surrender'])
         global count_victory
         count_victory = 0

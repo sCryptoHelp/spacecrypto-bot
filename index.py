@@ -252,13 +252,21 @@ def removeSpaceships():
         buttonsNewOrder = []
 
         if len(buttons) > 0:
-            index = len(buttons)
 
-            while index > 0:
-                index -= 1
-                buttonsNewOrder.append(buttons[index])
+            # Havia criado com objetivo de clicar nos X de baixo para cima
+            # e para conseguir fazer isso eu havia criado um while para posicionar os index ao contrario. 
+            # \o/ porem descobri o "reversed" que faz isso certinho.
+            
+            # index = len(buttons)
+            # while index > 0:
+            #     index -= 1
+            #     buttonsNewOrder.append(buttons[index])
 
-            for (x, y, w, h) in buttonsNewOrder:
+            # for (x, y, w, h) in buttonsNewOrder:
+            #     moveToWithRandomness(x+(w/2),y+(h/2),1)
+            #    pyautogui.click()
+
+            for (x, y, w, h) in reversed(buttons):
                 moveToWithRandomness(x+(w/2),y+(h/2),1)
                 pyautogui.click()
 

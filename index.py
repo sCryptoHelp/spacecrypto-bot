@@ -150,7 +150,8 @@ def scroll(clickAndDragAmount):
 
 def refreshPage():
     # refresh Page
-    clickBtn(images['refresh-page'])
+    # clickBtn(images['refresh-page'])
+    pyautogui.hotkey('ctrl','f5')
 
 def login():
     global login_attempts

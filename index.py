@@ -316,7 +316,7 @@ def refreshSpaceships(qtd, surrender = True):
         checkVictory()
 
         #Check IF Type is EndFightAndSurrender for to return to first boss
-        if(ct['type_limit_wave'] == 'EndFightAndSurrender') and surrender == True:
+        if(ct['type_limit_wave'] == 'EndFightAndSurrender' and surrender == True):
             surrenderFight()
     else:
         reloadSpacheship()

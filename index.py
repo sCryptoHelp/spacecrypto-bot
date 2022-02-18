@@ -153,42 +153,6 @@ def refreshPage():
     # clickBtn(images['refresh-page'])
     pyautogui.hotkey('ctrl','f5')
 
-def login():
-    global login_attempts
-    logger('😿 Checking if game has disconnected')
-
-    if login_attempts > 3:
-        logger('🔃 Too many login attempts, refreshing')
-        login_attempts = 0
-        processLogin()
-        return
-
-    if clickBtn(images['connect-wallet'], name='connectWalletBtn', timeout = 10):
-        logger('🎉 Connect wallet button detected, logging in!')
-        login_attempts = login_attempts + 1
-        
-
-    if clickBtn(images['select-wallet-2'], name='sign button', timeout=8):
-        # sometimes the sign popup appears imediately
-        login_attempts = login_attempts + 1
-
-        if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
-           login_attempts = 0
-           refreshSpaceships(0)
-        return
-
-    if not clickBtn(images['select-wallet-1-no-hover'], name='selectMetamaskBtn'):
-        if clickBtn(images['select-wallet-1-hover'], name='selectMetamaskHoverBtn', threshold  = ct['select_wallet_buttons'] ):
-            pass
-            
-    else:
-        pass
-        
-    if clickBtn(images['select-wallet-2'], name='signBtn', timeout = 20):
-        login_attempts = login_attempts + 1
-        
-    checkClose()
-
 def goToSpaceShips():
     if clickBtn(images['spg-spaceships-ico']):
         global login_attempts
@@ -222,7 +186,9 @@ def loginSPG():
 
     if clickBtn(images['select-wallet-2'], name='signBtn', timeout = 20):
         login_attempts = login_attempts + 1
-                
+
+    checkClose()
+
 def playSPG():
     if clickBtn(images['spg-play'], name='okPlay', timeout=5):
             logger('played SPG')

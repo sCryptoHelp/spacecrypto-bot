@@ -228,13 +228,17 @@ def clickButtonsFight():
     
     if(ct['send_space_only_full'] == True):
         buttons = positions(images['spg-go-fight-100'], threshold=ct['go_to_work_btn'])
+        ajustX = 14
+        ajustY = 14
     else:
         buttons = positions(images['spg-go-fight'], threshold=ct['go_to_work_btn'])
+        ajustX = 0
+        ajustY = 0
 
     qtd_send_spaceships = ct['qtd_send_spaceships']
     
     for (x, y, w, h) in buttons:
-        moveToWithRandomness(x+(w/2),y+(h/2),1)
+        moveToWithRandomness(x+ajustX+(w/2),y+ajustY+(h/2),1)
         pyautogui.click()
         global hero_clicks
         hero_clicks = hero_clicks + 1

@@ -49,6 +49,7 @@ hero_clicks = 0
 login_attempts = 0
 last_log_is_progress = False
 count_victory = 0
+time_start_bot = time.time()
 
 
 def addRandomness(n, randomn_factor_size=None):
@@ -252,9 +253,17 @@ def removeSpaceships():
 
         if len(buttons) == 0:
             break
+
+        if(CheckTimeRestartGame()):
+            break
        
 def clickButtonsFight():
-    buttons = positions(images['spg-go-fight'], threshold=ct['go_to_work_btn'])
+    
+    if(ct['send_space_only_full'] == True):
+        buttons = positions(images['spg-go-fight-100'], threshold=ct['go_to_work_btn'])
+    else:
+        buttons = positions(images['spg-go-fight'], threshold=ct['go_to_work_btn'])
+
     qtd_send_spaceships = ct['qtd_send_spaceships']
     
     for (x, y, w, h) in buttons:
@@ -281,7 +290,6 @@ def refreshSpaceships(qtd):
     global hero_clicks
     hero_clicks = 0
 
-    # c['scroll_attemps']
     empty_scrolls_attempts = qtd_send_spaceships 
       
     checkClose()
@@ -294,6 +302,11 @@ def refreshSpaceships(qtd):
             goToFight()
 
     while(empty_scrolls_attempts >0):
+
+        if(CheckTimeRestartGame()):
+            break
+
+
         buttonsClicked = clickButtonsFight()
         
         if buttonsClicked == 0:
@@ -375,7 +388,7 @@ def processLogin():
 def checkClose():
     if clickBtn(images['spg-close'], name='closeBtn', timeout=1):
         processLogin()
-
+        
 def reloadSpacheship():
     if len(positions(images['spg-base'], threshold=ct['commom_position'])) > 0 and len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
         clickBtn(images['spg-base'], name='closeBtn', timeout=1)
@@ -415,6 +428,24 @@ def checkLimitWave():
 
     return False
 
+def ReloadGame():
+    refreshPage()
+    time.sleep(5) 
+    processLogin()
+
+def CheckTimeRestartGame():
+
+    if( ct['time_restart_game'] > 0):
+        global time_start_bot
+        now = time.time()
+
+        if now - time_start_bot > addRandomness(ct['time_restart_game']*60):
+            ReloadGame() 
+            return True 
+    
+    return False
+
+
 def main():
     time.sleep(5)
     t = c['time_intervals']
@@ -452,15 +483,11 @@ def main():
             if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                 time.sleep(ct['check_processing_time']) 
                 if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-                    refreshPage()
-                    time.sleep(5) 
-                    processLogin()
+                    ReloadGame()
                 
             if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
-                    refreshPage()
-                    time.sleep(5) 
-                    processLogin()
+                    ReloadGame()
                 else:
                     last["CheckInitialPage"] = now
                     pass
@@ -469,9 +496,7 @@ def main():
             
             if len(positions(images['spg-cube'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInicialCube"] > addRandomness(ct['check_initial_cube']*60):
-                    refreshPage()
-                    time.sleep(5) 
-                    processLogin()
+                    ReloadGame()
                 else:
                     last["CheckInicialCube"] = now
                     pass
@@ -481,9 +506,7 @@ def main():
 
             if len(positions(images['spg-back'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckBackPage"] > addRandomness(ct['check_erro']*60):
-                    refreshPage()
-                    time.sleep(5) 
-                    processLogin()
+                    ReloadGame()
                 else:
                     last["CheckBackPage"] = now
                     pass
@@ -533,6 +556,7 @@ def main():
                     if len(nowPosition) == 0:
                         last["checkBossTime"] = now
 
+            CheckTimeRestartGame()
 main()
 
 

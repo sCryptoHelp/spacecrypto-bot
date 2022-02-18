@@ -73,6 +73,33 @@
     #         EndFightAndSurrender - Renova as Naves e Desiste da Luta - Volta para o 1 Boss
     type_limit_wave: 'EndFightAndSurrender' # EndFight or Surrender or EndFightAndSurrender
 
+    
+
+    # [en_US]
+    # Time for bot restart Game
+    # For the function to work, leave the browser in the default color as instructed 
+    # in GitHut:  https://github.com/sCryptoHelp/spacecrypto-bot#recomenda%C3%A7%C3%B5es
+    # Default value in minuts: 0
+    # *If defined: 0 the function don't start
+    #
+    # [pt_BR]
+    # Tempo para o Bot Reiniciar o Jogo.
+    # Para funcao funcionar deixe o navegador na cor padrao igual instrução 
+    # no GitHut: https://github.com/sCryptoHelp/spacecrypto-bot#recomenda%C3%A7%C3%B5es
+    # Valor padrão em minutos: 0
+    # *Se definido: 0 a função não inicia
+    time_restart_game: 0
+
+    # [en_US]
+    # Defines if the Bot will only send ships with 100% life
+    # Default value: False
+    #
+    # [pt_BR]
+    # Define se o Bot só vai enviar naves com 100% de vida
+    # Valor padrão: False
+    send_space_only_full: False
+
+
     # ============================================================ #
     # [en_US] End - Edit this area according to your account configuration
     #

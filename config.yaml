@@ -47,7 +47,7 @@
     # [pt_BR]
     # Limitação de Wave - Caso deseje limitar as Wave, mude a configuração para "True"
     # Valor padrão: False
-    limit_wave: False  
+    limit_wave: True  
 
     # [en_US]
     # Wave Limitation - Enter here the amount of Wave the Bot should play

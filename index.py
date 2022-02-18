@@ -122,7 +122,7 @@ def clickBtn(img,name=None, timeout=3, threshold = ct['default']):
         pos_click_x = x+w/2
         pos_click_y = y+h/2
 
-        moveToWithRandomness(pos_click_x,pos_click_y,1)
+        moveToWithRandomness(pos_click_x,pos_click_y,0.7)
         pyautogui.click()
         return True
 
@@ -167,7 +167,8 @@ def scroll(clickAndDragAmount):
 
 def refreshPage():
     # refresh Page
-    clickBtn(images['refresh-page'])
+    #clickBtn(images['refresh-page'])
+    pyautogui.hotkey('ctrl','f5')
 
 def login():
     global login_attempts
@@ -280,7 +281,7 @@ def clickButtonsFight():
             return -1
     return len(buttons)
 
-def refreshSpaceships(qtd):
+def refreshSpaceships(qtd, surrender = True):
 
     logger('Refresh Spaceship to Fight')
 
@@ -327,7 +328,7 @@ def refreshSpaceships(qtd):
         checkVictory()
 
         #Check IF Type is EndFightAndSurrender for to return to first boss
-        if(ct['type_limit_wave'] == 'EndFightAndSurrender'):
+        if(ct['type_limit_wave'] == 'EndFightAndSurrender') and surrender == True:
             surrenderFight()
     else:
         reloadSpacheship()
@@ -339,15 +340,15 @@ def goToFight():
     clickBtn(images['spg-confirm'])
 
 def surrenderFight():
-    if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
-        clickBtn(images['spg-surrender'])
+    if len(positions(images['spg-surrender'], threshold=ct['commom'])  ) > 0:
+        clickBtn(images['spg-surrender'], threshold=ct['commom'])
         time.sleep(2)
         clickBtn(images['spg-confirm-surrender'])
         global count_victory
         count_victory = 0
 
 
-def endFight():
+def endFight(surrender = True):
     logger("End fight")
     time.sleep(3) 
     returnBase()
@@ -358,8 +359,8 @@ def endFight():
 
     if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
         removeSpaceships()
-        time.sleep(1) 
-        refreshSpaceships(0)
+        time.sleep(1)
+        refreshSpaceships(0, surrender)
     else:
         refreshPage()
 
@@ -430,26 +431,15 @@ def checkLimitWave():
 
 def checkZeroSpacheship():
     if len(positions(images['spg-surrender'], ct['commom'])) > 0:
-        start = time.time()
-        has_timed_out = False
-        while(not has_timed_out):
-            matches = positions(images['0-15'], ct['commom_position'])
-            if(len(matches)==0):
-                has_timed_out = time.time()-start > 3
-                continue
-            elif(len(matches)>0):
-                clickBtn(images['spg-spaceships-ico'], name='closeBtn', timeout=1)
-                time.sleep(10)
-                removeSpaceships()
-                time.sleep(1) 
-                refreshSpaceships(0)
-                return True
-    return False
+        if len(positions(images['0-15'], ct['commom_position'])) > 0:
+            logger("Spaceships zeradas, tentando reiniciar...")
+            time.sleep(2)
+            endFight(False)
 
 def main():
     time.sleep(5)
     t = c['time_intervals']
-    
+
 
     windows = []
 

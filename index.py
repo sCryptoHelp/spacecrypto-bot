@@ -248,9 +248,7 @@ def removeSpaceships():
 
     while True: 
         buttons = positions(images['spg-x'], threshold=ct['remove_to_work_btn'])
-
-        buttonsNewOrder = []
-
+        
         if len(buttons) > 0:
 
             # Havia criado com objetivo de clicar nos X de baixo para cima

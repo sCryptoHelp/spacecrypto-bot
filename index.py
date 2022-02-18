@@ -84,22 +84,6 @@ def load_images():
 
 images = load_images()
 
-def show(rectangles, img = None):
-
-    if img is None:
-        with mss.mss() as sct:
-            monitor = sct.monitors[0]
-            img = np.array(sct.grab(monitor))
-
-    for (x, y, w, h) in rectangles:
-        cv2.rectangle(img, (x, y), (x + w, y + h), (255,255,255,255), 2)
-
-    cv2.imshow('img',img)
-    cv2.waitKey(0)
-
-
-
-
 
 def clickBtn(img,name=None, timeout=3, threshold = ct['default']):
     logger(None, progress_indicator=True)
@@ -125,7 +109,6 @@ def clickBtn(img,name=None, timeout=3, threshold = ct['default']):
         moveToWithRandomness(pos_click_x,pos_click_y,0.7)
         pyautogui.click()
         return True
-
 
 def printSreen():
     with mss.mss() as sct:
@@ -163,7 +146,6 @@ def scroll(clickAndDragAmount):
     moveToWithRandomness(x,y,1)
 
     pyautogui.dragRel(0,clickAndDragAmount,duration=1, button='left')
-
 
 def refreshPage():
     # refresh Page
@@ -249,17 +231,23 @@ def removeSpaceships():
 
     while True: 
         buttons = positions(images['spg-x'], threshold=ct['remove_to_work_btn'])
-
-        buttonsNewOrder = []
-
+        
         if len(buttons) > 0:
-            index = len(buttons)
 
-            while index > 0:
-                index -= 1
-                buttonsNewOrder.append(buttons[index])
+            # Havia criado com objetivo de clicar nos X de baixo para cima
+            # e para conseguir fazer isso eu havia criado um while para posicionar os index ao contrario. 
+            # \o/ porem descobri o "reversed" que faz isso certinho.
+            
+            # index = len(buttons)
+            # while index > 0:
+            #     index -= 1
+            #     buttonsNewOrder.append(buttons[index])
 
-            for (x, y, w, h) in buttonsNewOrder:
+            # for (x, y, w, h) in buttonsNewOrder:
+            #     moveToWithRandomness(x+(w/2),y+(h/2),1)
+            #    pyautogui.click()
+
+            for (x, y, w, h) in reversed(buttons):
                 moveToWithRandomness(x+(w/2),y+(h/2),1)
                 pyautogui.click()
 
@@ -346,7 +334,6 @@ def surrenderFight():
         clickBtn(images['spg-confirm-surrender'])
         global count_victory
         count_victory = 0
-
 
 def endFight(surrender = True):
     logger("End fight")

@@ -180,3 +180,12 @@ Após toda alteração salve o arquivo e reinicie o Bot.
 
 ## 📄 Licença
 **Free Software!**
+
+
+## 🔖 Créditos
+Muitos me perguntam como o Bot foi montado.
+Esse projeto foi baseado no do BombCrypto que me ajudou muito e me levou a aprender programar Phyton.
+
+Link: https://github.com/mpcabete/bombcrypto-bot
+
+#ObrigadoBombCrypto! 💣🚀

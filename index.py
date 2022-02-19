@@ -49,6 +49,7 @@ hero_clicks = 0
 login_attempts = 0
 last_log_is_progress = False
 count_victory = 0
+time_start_bot = time.time()
 
 
 def addRandomness(n, randomn_factor_size=None):
@@ -149,44 +150,8 @@ def scroll(clickAndDragAmount):
 
 def refreshPage():
     # refresh Page
-    #clickBtn(images['refresh-page'])
+    # clickBtn(images['refresh-page'])
     pyautogui.hotkey('ctrl','f5')
-
-def login():
-    global login_attempts
-    logger('😿 Checking if game has disconnected')
-
-    if login_attempts > 3:
-        logger('🔃 Too many login attempts, refreshing')
-        login_attempts = 0
-        processLogin()
-        return
-
-    if clickBtn(images['connect-wallet'], name='connectWalletBtn', timeout = 10):
-        logger('🎉 Connect wallet button detected, logging in!')
-        login_attempts = login_attempts + 1
-        
-
-    if clickBtn(images['select-wallet-2'], name='sign button', timeout=8):
-        # sometimes the sign popup appears imediately
-        login_attempts = login_attempts + 1
-
-        if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
-           login_attempts = 0
-           refreshSpaceships(0)
-        return
-
-    if not clickBtn(images['select-wallet-1-no-hover'], name='selectMetamaskBtn'):
-        if clickBtn(images['select-wallet-1-hover'], name='selectMetamaskHoverBtn', threshold  = ct['select_wallet_buttons'] ):
-            pass
-            
-    else:
-        pass
-        
-    if clickBtn(images['select-wallet-2'], name='signBtn', timeout = 20):
-        login_attempts = login_attempts + 1
-        
-    checkClose()
 
 def goToSpaceShips():
     if clickBtn(images['spg-spaceships-ico']):
@@ -221,7 +186,9 @@ def loginSPG():
 
     if clickBtn(images['select-wallet-2'], name='signBtn', timeout = 20):
         login_attempts = login_attempts + 1
-                
+
+    checkClose()
+
 def playSPG():
     if clickBtn(images['spg-play'], name='okPlay', timeout=5):
             logger('played SPG')
@@ -253,13 +220,25 @@ def removeSpaceships():
 
         if len(buttons) == 0:
             break
+
+        if(CheckTimeRestartGame()):
+            break
        
 def clickButtonsFight():
-    buttons = positions(images['spg-go-fight'], threshold=ct['go_to_work_btn'])
+    
+    if(ct['send_space_only_full'] == True):
+        buttons = positions(images['spg-go-fight-100'], threshold=ct['go_to_work_btn'])
+        ajustX = 14
+        ajustY = 14
+    else:
+        buttons = positions(images['spg-go-fight'], threshold=ct['go_to_work_btn'])
+        ajustX = 0
+        ajustY = 0
+
     qtd_send_spaceships = ct['qtd_send_spaceships']
     
     for (x, y, w, h) in buttons:
-        moveToWithRandomness(x+(w/2),y+(h/2),1)
+        moveToWithRandomness(x+ajustX+(w/2),y+ajustY+(h/2),1)
         pyautogui.click()
         global hero_clicks
         hero_clicks = hero_clicks + 1
@@ -282,7 +261,6 @@ def refreshSpaceships(qtd, onlyRefresh = False):
     global hero_clicks
     hero_clicks = 0
 
-    # c['scroll_attemps']
     empty_scrolls_attempts = qtd_send_spaceships 
       
     checkClose()
@@ -295,6 +273,11 @@ def refreshSpaceships(qtd, onlyRefresh = False):
             goToFight()
 
     while(empty_scrolls_attempts >0):
+
+        if(CheckTimeRestartGame()):
+            break
+
+
         buttonsClicked = clickButtonsFight()
         
         if buttonsClicked == 0:
@@ -377,7 +360,7 @@ def processLogin():
 def checkClose():
     if clickBtn(images['spg-close'], name='closeBtn', timeout=1):
         processLogin()
-
+        
 def reloadSpacheship():
     if len(positions(images['spg-base'], threshold=ct['commom_position'])) > 0 and len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
         clickBtn(images['spg-base'], name='closeBtn', timeout=1)
@@ -424,6 +407,23 @@ def checkZeroSpacheship():
             time.sleep(2)
             endFight(True)
 
+def ReloadGame():
+    refreshPage()
+    time.sleep(5) 
+    processLogin()
+
+def CheckTimeRestartGame():
+
+    if( ct['time_restart_game'] > 0):
+        global time_start_bot
+        now = time.time()
+
+        if now - time_start_bot > addRandomness(ct['time_restart_game']*60):
+            ReloadGame() 
+            return True 
+    
+    return False
+
 def main():
     time.sleep(5)
     t = c['time_intervals']
@@ -462,15 +462,11 @@ def main():
             if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                 time.sleep(ct['check_processing_time']) 
                 if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-                    refreshPage()
-                    time.sleep(5) 
-                    processLogin()
+                    ReloadGame()
                 
             if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
-                    refreshPage()
-                    time.sleep(5) 
-                    processLogin()
+                    ReloadGame()
                 else:
                     last["CheckInitialPage"] = now
                     pass
@@ -479,9 +475,7 @@ def main():
             
             if len(positions(images['spg-cube'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInicialCube"] > addRandomness(ct['check_initial_cube']*60):
-                    refreshPage()
-                    time.sleep(5) 
-                    processLogin()
+                    ReloadGame()
                 else:
                     last["CheckInicialCube"] = now
                     pass
@@ -491,9 +485,7 @@ def main():
 
             if len(positions(images['spg-back'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckBackPage"] > addRandomness(ct['check_erro']*60):
-                    refreshPage()
-                    time.sleep(5) 
-                    processLogin()
+                    ReloadGame()
                 else:
                     last["CheckBackPage"] = now
                     pass
@@ -543,6 +535,7 @@ def main():
                     if len(nowPosition) == 0:
                         last["checkBossTime"] = now
 
+            CheckTimeRestartGame()
 main()
 
 

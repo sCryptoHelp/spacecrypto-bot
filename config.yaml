@@ -220,12 +220,12 @@
 
     # [en_US]
     # Time wait after Refresh Page in seconds
-    # Default value: 23
+    # Default value: 30
     #
     # [pt_BR]
     # Tempo Esperar depois de Reiniciar a Pagina em Segundos
-    # Valor padrão: 23
-    timeW_after_refreshPage: 23
+    # Valor padrão: 30
+    timeW_after_refreshPage: 30
 
     # [en_US]
     # Time wait Initial Page in minutes

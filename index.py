@@ -266,7 +266,7 @@ def clickButtonsFight():
 def refreshSpaceships(qtd):
 
     logger('Refresh Spaceship to Fight')
-
+    global count_reloadSpacheship
     buttonsClicked = 1
     empty_qtd_spaceships = ct['qtd_spaceships']
     qtd_send_spaceships = ct['qtd_send_spaceships']
@@ -310,6 +310,7 @@ def refreshSpaceships(qtd):
 
     if hero_clicks == qtd_send_spaceships:
         empty_scrolls_attempts = 0
+        count_reloadSpacheship = 0
         goToFight()
         checkVictory()
 
@@ -317,7 +318,6 @@ def refreshSpaceships(qtd):
         if(ct['type_limit_wave'] == 'EndFightAndSurrender'):
             surrenderFight()
     else:
-        global count_reloadSpacheship
         count_reloadSpacheship +=1
 
         reloadSpacheship()

@@ -329,8 +329,8 @@ def goToFight():
     clickBtn(images['spg-confirm'])
 
 def surrenderFight():
-    if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
-        clickBtn(images['spg-surrender'])
+    if len(positions(images['spg-surrender'], threshold=ct['commom'])  ) > 0:
+        clickBtn(images['spg-surrender'], threshold=ct['commom'])
         time.sleep(1.5)
         clickBtn(images['spg-confirm-surrender'])
         global count_victory

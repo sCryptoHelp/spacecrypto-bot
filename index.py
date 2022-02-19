@@ -2,8 +2,6 @@
 from ast import Return
 from cv2 import cv2
 
-from captcha.solveCaptcha import solveCaptcha
-
 from os import listdir
 from src.logger import logger, loggerMapClicked
 from random import randint
@@ -409,7 +407,7 @@ def checkZeroSpacheship():
 
 def ReloadGame():
     refreshPage()
-    time.sleep(5) 
+    time.sleep(5)
     processLogin()
 
 def CheckTimeRestartGame():
@@ -419,7 +417,7 @@ def CheckTimeRestartGame():
         now = time.time()
 
         if now - time_start_bot > addRandomness(ct['time_restart_game']*60):
-            ReloadGame() 
+            ReloadGame()
             return True 
     
     return False

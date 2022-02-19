@@ -219,6 +219,15 @@
     check_initial_page: 60
 
     # [en_US]
+    # Time wait after Refresh Page in seconds
+    # Default value: 23
+    #
+    # [pt_BR]
+    # Tempo Esperar depois de Reiniciar a Pagina em Segundos
+    # Valor padrão: 23
+    timeW_after_refreshPage: 23
+
+    # [en_US]
     # Time wait Initial Page in minutes
     # Default value: 2
     #

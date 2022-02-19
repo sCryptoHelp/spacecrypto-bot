@@ -151,9 +151,9 @@ def scroll(clickAndDragAmount):
     pyautogui.dragRel(0,clickAndDragAmount,duration=1, button='left')
 
 def refreshPage():
-    # refresh Page
-    # clickBtn(images['refresh-page'])
     pyautogui.hotkey('ctrl','f5')
+    time.sleep(ct['timeW_after_refreshPage']) 
+    processLogin()
 
 def goToSpaceShips():
     if clickBtn(images['spg-spaceships-ico']):
@@ -416,12 +416,7 @@ def checkLimitWave():
             checkVictory()
             return False
 
-    return False
-
-def ReloadGame():
-    refreshPage()
-    time.sleep(5) 
-    processLogin()
+    return False  
 
 def CheckTimeRestartGame():
 
@@ -430,7 +425,7 @@ def CheckTimeRestartGame():
         now = time.time()
 
         if now - time_start_bot > addRandomness(ct['time_restart_game']*60):
-            ReloadGame() 
+            refreshPage() 
             return True 
     
     return False
@@ -455,7 +450,7 @@ def main():
 
     while True:
         now = time.time()
-                
+                        
         for last in windows:
             if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
                 processLogin() 
@@ -473,11 +468,11 @@ def main():
             if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                 time.sleep(ct['check_processing_time']) 
                 if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-                    ReloadGame()
+                    refreshPage()
                 
             if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
-                    ReloadGame()
+                    refreshPage()
                 else:
                     last["CheckInitialPage"] = now
                     pass
@@ -486,7 +481,7 @@ def main():
             
             if len(positions(images['spg-cube'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInicialCube"] > addRandomness(ct['check_initial_cube']*60):
-                    ReloadGame()
+                    refreshPage()
                 else:
                     last["CheckInicialCube"] = now
                     pass
@@ -496,7 +491,7 @@ def main():
 
             if len(positions(images['spg-back'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckBackPage"] > addRandomness(ct['check_erro']*60):
-                    ReloadGame()
+                    refreshPage()
                 else:
                     last["CheckBackPage"] = now
                     pass

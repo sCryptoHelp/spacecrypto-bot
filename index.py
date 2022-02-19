@@ -48,6 +48,8 @@ login_attempts = 0
 last_log_is_progress = False
 count_victory = 0
 time_start_bot = time.time()
+count_reloadSpacheship = 0
+
 
 
 def addRandomness(n, randomn_factor_size=None):
@@ -147,9 +149,9 @@ def scroll(clickAndDragAmount):
     pyautogui.dragRel(0,clickAndDragAmount,duration=1, button='left')
 
 def refreshPage():
-    # refresh Page
-    # clickBtn(images['refresh-page'])
     pyautogui.hotkey('ctrl','f5')
+    time.sleep(ct['timeW_after_refreshPage']) 
+    processLogin()
 
 def goToSpaceShips():
     if clickBtn(images['spg-spaceships-ico']):
@@ -224,6 +226,9 @@ def removeSpaceships():
        
 def clickButtonsFight():
     
+    global count_reloadSpacheship
+    
+    
     if(ct['send_space_only_full'] == True):
         buttons = positions(images['spg-go-fight-100'], threshold=ct['go_to_work_btn'])
         ajustX = 14
@@ -235,7 +240,8 @@ def clickButtonsFight():
 
     qtd_send_spaceships = ct['qtd_send_spaceships']
     
-    for (x, y, w, h) in buttons:
+
+    for (x, y, w, h) in reversed(buttons): #Adjust for click button a little more intelligent 
         moveToWithRandomness(x+ajustX+(w/2),y+ajustY+(h/2),1)
         pyautogui.click()
         global hero_clicks
@@ -244,12 +250,21 @@ def clickButtonsFight():
         if hero_clicks >= qtd_send_spaceships:
             logger('Finish Click Hero')
             return -1
+        
+        if(ct['send_incomplete_team']):
+            if hero_clicks > 0:
+                if hero_clicks >= ct['send_space_min']:
+                    if count_reloadSpacheship >= ct['qtd_check_reloadSpacheship']:
+                        logger('Enviando time mesmo incompleto')
+                        hero_clicks = qtd_send_spaceships 
+                        return -1
+
     return len(buttons)
 
 def refreshSpaceships(qtd, onlyRefresh = False):
 
     logger('Refresh Spaceship to Fight')
-
+    global count_reloadSpacheship
     buttonsClicked = 1
     empty_qtd_spaceships = ct['qtd_spaceships']
     qtd_send_spaceships = ct['qtd_send_spaceships']
@@ -293,6 +308,7 @@ def refreshSpaceships(qtd, onlyRefresh = False):
 
     if hero_clicks == qtd_send_spaceships:
         empty_scrolls_attempts = 0
+        count_reloadSpacheship = 0
         goToFight()
         checkVictory()
 
@@ -301,8 +317,11 @@ def refreshSpaceships(qtd, onlyRefresh = False):
             surrenderFight()
             logger('SURRENDER TRIGGERED!')
     else:
+        count_reloadSpacheship +=1
+
         reloadSpacheship()
         refreshSpaceships(hero_clicks)
+        
 
 def goToFight():
     clickBtn(images['spg-go-to-boss'])
@@ -310,9 +329,9 @@ def goToFight():
     clickBtn(images['spg-confirm'])
 
 def surrenderFight():
-    if len(positions(images['spg-surrender'], threshold=ct['commom'])  ) > 0:
-        clickBtn(images['spg-surrender'], threshold=ct['commom'])
-        time.sleep(2)
+    if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
+        clickBtn(images['spg-surrender'])
+        time.sleep(1.5)
         clickBtn(images['spg-confirm-surrender'])
         global count_victory
         count_victory = 0
@@ -405,11 +424,6 @@ def checkZeroSpacheship():
             time.sleep(2)
             endFight(True)
 
-def ReloadGame():
-    refreshPage()
-    time.sleep(5)
-    processLogin()
-
 def CheckTimeRestartGame():
 
     if( ct['time_restart_game'] > 0):
@@ -417,7 +431,7 @@ def CheckTimeRestartGame():
         now = time.time()
 
         if now - time_start_bot > addRandomness(ct['time_restart_game']*60):
-            ReloadGame()
+            refreshPage() 
             return True 
     
     return False
@@ -441,7 +455,7 @@ def main():
 
     while True:
         now = time.time()
-                
+                        
         for last in windows:
             if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
                 processLogin() 
@@ -460,11 +474,11 @@ def main():
             if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                 time.sleep(ct['check_processing_time']) 
                 if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-                    ReloadGame()
+                    refreshPage()
                 
             if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
-                    ReloadGame()
+                    refreshPage()
                 else:
                     last["CheckInitialPage"] = now
                     pass
@@ -473,7 +487,7 @@ def main():
             
             if len(positions(images['spg-cube'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckInicialCube"] > addRandomness(ct['check_initial_cube']*60):
-                    ReloadGame()
+                    refreshPage()
                 else:
                     last["CheckInicialCube"] = now
                     pass
@@ -483,7 +497,7 @@ def main():
 
             if len(positions(images['spg-back'], threshold=ct['commom_position'])) > 0:
                 if now - last["CheckBackPage"] > addRandomness(ct['check_erro']*60):
-                    ReloadGame()
+                    refreshPage()
                 else:
                     last["CheckBackPage"] = now
                     pass

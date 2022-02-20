@@ -439,19 +439,6 @@ def main():
     time.sleep(5)
     t = c['time_intervals']
 
-
-    windows = []
-
-    for w in pygetwindow.getWindowsWithTitle('spacecrypto'):
-        windows.append({
-            "window": w,
-            "lessPosition":[],
-            "CheckInitialPage":0,
-            "CheckInicialCube":0,
-            "CheckBackPage":0,
-            
-            })
-
     last = {
         "lessPosition":[],
         "CheckInitialPage" : 0,

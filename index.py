@@ -418,7 +418,7 @@ def checkLimitWave():
 
 def checkZeroSpacheship():
     if len(positions(images['spg-surrender'], ct['commom'])) > 0:
-        if len(positions(images['0-15'], ct['commom_position'])) > 0:
+        if len(positions(images['0-15'], 0.95)) > 0:
             logger("Spaceships zeradas, tentando reiniciar...")
             time.sleep(2)
             endFight(True)

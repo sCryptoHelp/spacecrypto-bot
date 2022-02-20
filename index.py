@@ -251,9 +251,10 @@ def clickButtonsFight():
             logger('Finish Click Hero')
             return -1
         
-        if(ct['send_incomplete_team']):
+        if ct['send_incomplete_team'] == True:
             if hero_clicks > 0:
                 if hero_clicks >= ct['send_space_min']:
+                    logger('Quantidade minima de naves atingida!')
                     if count_reloadSpacheship >= ct['qtd_check_reloadSpacheship']:
                         logger('Enviando time mesmo incompleto')
                         hero_clicks = qtd_send_spaceships 
@@ -266,7 +267,7 @@ def refreshSpaceships(qtd, onlyRefresh = False):
     logger('Refresh Spaceship to Fight')
     global count_reloadSpacheship
     buttonsClicked = 1
-    empty_qtd_spaceships = ct['qtd_spaceships']
+    #empty_qtd_spaceships = ct['qtd_spaceships']
     qtd_send_spaceships = ct['qtd_send_spaceships']
 
     cda =  c['click_and_drag_amount']
@@ -313,11 +314,13 @@ def refreshSpaceships(qtd, onlyRefresh = False):
         checkVictory()
 
         #Check IF Type is EndFightAndSurrender for to return to first boss
-        if ct['limit_wave'] == True and ct['type_limit_wave'] == 'EndFightAndSurrender' and onlyRefresh == False:
-            surrenderFight()
-            logger('SURRENDER TRIGGERED!')
+        if ct['limit_wave'] == True and onlyRefresh == False:
+            if ct['type_limit_wave'] == 'EndFightAndSurrender':
+                surrenderFight()
+                logger('SURRENDER TRIGGERED [1]!')
     else:
-        count_reloadSpacheship +=1
+        count_reloadSpacheship = count_reloadSpacheship + 1
+        logger('Reloading spaceships [{}]!'.format(count_reloadSpacheship))
 
         reloadSpacheship()
         refreshSpaceships(hero_clicks)
@@ -396,18 +399,15 @@ def checkVictory():
 def checkLimitWave():
     global count_victory
 
-    limitWave = ct['limit_wave'] 
-    qtdLimitWave = ct['qtd_limit_wave']
-    typeLimitWave = ct['type_limit_wave']
-
-    if(limitWave == True):
-        if(count_victory >= qtdLimitWave):
+    if ct['limit_wave'] == True:
+        if count_victory >= ct['qtd_limit_wave']:
             count_victory = 0
             time.sleep(1) 
-            if(typeLimitWave == 'EndFight' or typeLimitWave == 'EndFightAndSurrender'):
+            if ct['type_limit_wave'] == 'EndFight' or ct['type_limit_wave'] == 'EndFightAndSurrender':
                 endFight()
             else:
                 surrenderFight()
+                logger('SURRENDER TRIGGERED [2]!')
 
             time.sleep(2) 
             return True

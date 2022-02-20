@@ -71,7 +71,7 @@
     # Opções: EndFight - Apenas renova as Naves
     #         Surrender - Apenas desiste da Luta
     #         EndFightAndSurrender - Renova as Naves e Desiste da Luta - Volta para o 1 Boss
-    type_limit_wave: 'EndFightAndSurrender' # EndFight or Surrender or EndFightAndSurrender
+    type_limit_wave: 'Surrender' # EndFight or Surrender or EndFightAndSurrender
 
     
 
@@ -106,7 +106,7 @@
     # [pt_BR]
     # Define se o Bot pode começar a luta com time incompleto
     # Valor padrão: False
-    send_incomplete_team: False
+    send_incomplete_team: True
 
     # [en_US]
     # Defines the minimum amount of ships to be sent. This option only works if "send_incomplete_team" is set to True
@@ -115,7 +115,7 @@
     # [pt_BR]
     # Define a quantidade minima a ser enviado de naves. Essa opção só funciona se a "send_incomplete_team" estiver como True
     # Valor padrão: 7
-    send_space_min: 7
+    send_space_min: 10
 
     # [en_US]
     # Sets the limit on how many times the Bot will scroll the screen to the end in search of ships. This option only works if "send_incomplete_team" is set to True
@@ -124,7 +124,7 @@
     # [pt_BR]
     # Define o limite de quantas vezes o Bot vai scrollar a tela ate o final em busca de naves. Essa opção só funciona se a "send_incomplete_team" estiver como True
     # Valor padrão: 3
-    qtd_check_reloadSpacheship: 3
+    qtd_check_reloadSpacheship: 1
 
 
     

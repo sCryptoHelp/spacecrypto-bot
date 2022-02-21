@@ -168,21 +168,14 @@ Após toda alteração salve o arquivo e reinicie o Bot.
 ![alt text](https://github.com/sCryptoHelp/spacecrypto-bot/blob/main/readme-doc/navegador.png?raw=true)
 
 
-# Gostou do conteúdo, então já sabe o que fazer! 😉🤩
-
-- Wallet Smart Chain: `0xCD1A7A05DC2ee5d0CcB38a4e653e81A4CA78657c`
-- Chave Pix: `8c3b043a-b2c0-44df-a90d-41b3f4294614`
+## 📄 Licença
+**Free Software!**
 
 ## ▶️ Link Passo a Passo Instalação Auxiliar
 [https://www.youtube.com/watch?v=L1CkRyTmpxM](https://www.youtube.com/watch?v=L1CkRyTmpxM)
 
 ## ▶️ Link para Bot em Execução
 [https://youtu.be/M11ubT04vVY](https://youtu.be/M11ubT04vVY)
-
-
-## 📄 Licença
-**Free Software!**
-
 
 ## 🔖 Créditos
 Muitos me perguntam como o Bot foi montado.
@@ -191,3 +184,16 @@ Esse projeto foi baseado no do BombCrypto que me ajudou muito e me levou a apren
 Link: https://github.com/mpcabete/bombcrypto-bot
 
 #ObrigadoBombCrypto! 💣🚀
+
+
+## 🤔 Dúvidas Frequentes 
+👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/wiki/D%C3%BAvidas-Frequentes
+
+## 💡 Sugestões de Melhorias/Report de erros
+👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/issues/new
+
+# Gostou do conteúdo, então já sabe o que fazer! 😉🤩
+
+- Wallet Smart Chain: `0xCD1A7A05DC2ee5d0CcB38a4e653e81A4CA78657c`
+- Chave Pix: `8c3b043a-b2c0-44df-a90d-41b3f4294614`
+

@@ -4,6 +4,8 @@
 
 Atualizações 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/releases
 
+Dúvidas Frequentes 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/wiki/D%C3%BAvidas-Frequentes
+
 ## 
 Um Bot de código aberto, para que qualquer pessoal possa utilizar e colaborar com updates.
 

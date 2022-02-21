@@ -329,6 +329,8 @@ def refreshSpaceships(qtd):
         qtd_spaceships = math.ceil(qtd_spaceships/30)
 
         if count_nexList < qtd_spaceships:
+               reloadSpacheship()
+               time.sleep(1)
                clickBtn(images['spg-next'])
                time.sleep(1)
                count_nexList +=1

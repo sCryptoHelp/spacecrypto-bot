@@ -16,6 +16,7 @@ import time
 import sys
 
 import yaml
+import math
 
 
 msg = """
@@ -51,6 +52,7 @@ last_log_is_progress = False
 count_victory = 0
 time_start_bot = time.time()
 count_reloadSpacheship = 0
+count_nexList = 1
 
 
 
@@ -267,8 +269,10 @@ def refreshSpaceships(qtd):
 
     logger('Refresh Spaceship to Fight')
     global count_reloadSpacheship
+    global count_nexList
+            
     buttonsClicked = 1
-    empty_qtd_spaceships = ct['qtd_spaceships']
+    qtd_spaceships = ct['qtd_spaceships']
     qtd_send_spaceships = ct['qtd_send_spaceships']
 
     cda =  c['click_and_drag_amount']
@@ -311,6 +315,7 @@ def refreshSpaceships(qtd):
     if hero_clicks == qtd_send_spaceships:
         empty_scrolls_attempts = 0
         count_reloadSpacheship = 0
+        count_nexList = 1
         goToFight()
         checkVictory()
 
@@ -319,8 +324,18 @@ def refreshSpaceships(qtd):
             surrenderFight()
     else:
         count_reloadSpacheship +=1
+        
+        qtd_spaceships = ct['qtd_spaceships']
+        qtd_spaceships = math.ceil(qtd_spaceships/30)
 
-        reloadSpacheship()
+        if count_nexList < qtd_spaceships:
+               clickBtn(images['spg-next'])
+               time.sleep(1)
+               count_nexList +=1
+        else:
+           count_nexList = 1
+           reloadSpacheship() 
+
         refreshSpaceships(hero_clicks)
         
 
@@ -452,6 +467,7 @@ def main():
         now = time.time()
                         
         for last in windows:
+    
             if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
                 processLogin() 
             else:

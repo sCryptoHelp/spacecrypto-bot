@@ -2,9 +2,13 @@
 ## _Proporcionando Boas Noites de sono 😴_
 ## Se for copiar para divulgar coloque nosso link nos créditos. 😉
 
-Atualizações 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/releases
+⚙️ Atualizações 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/releases
 
-Dúvidas Frequentes 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/wiki/D%C3%BAvidas-Frequentes
+🤔 Dúvidas Frequentes 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/wiki/D%C3%BAvidas-Frequentes
+
+📽️ Assista ao Vivo 👉🏻 https://www.twitch.tv/jacksonlizier?sr=a
+
+💡 Sugestões de Melhorias/Report de erros 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/issues/new
 
 ## 
 Um Bot de código aberto, para que qualquer pessoal possa utilizar e colaborar com updates.
@@ -176,6 +180,9 @@ Após toda alteração salve o arquivo e reinicie o Bot.
 
 ## ▶️ Link para Bot em Execução
 [https://youtu.be/M11ubT04vVY](https://youtu.be/M11ubT04vVY)
+
+## 📽️ Assista Ao Vivo
+[https://www.twitch.tv/jacksonlizier?sr=a](https://www.twitch.tv/jacksonlizier?sr=a)
 
 ## 🔖 Créditos
 Muitos me perguntam como o Bot foi montado.

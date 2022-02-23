@@ -8,7 +8,7 @@
 
 🤔 Dúvidas Frequentes 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/wiki/D%C3%BAvidas-Frequentes
 
-📽️ Assista ao Vivo 👉🏻 https://www.twitch.tv/jacksonlizier?sr=a
+📽️ Assista ao Vivo (Entre 08h-18h e 23h-07h) 👉🏻 https://www.twitch.tv/jacksonlizier?sr=a
 
 💡 Sugestões de Melhorias/Report de erros 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/issues/new
 

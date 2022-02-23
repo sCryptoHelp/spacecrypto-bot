@@ -13,6 +13,7 @@ import time
 import sys
 
 import yaml
+import math
 
 
 msg = """
@@ -48,6 +49,7 @@ last_log_is_progress = False
 count_victory = 0
 time_start_bot = time.time()
 count_reloadSpacheship = 0
+count_nexList = 1
 
 
 
@@ -249,7 +251,7 @@ def clickButtonsFight():
         if hero_clicks >= qtd_send_spaceships:
             logger('Finish Click Hero')
             return -1
-        
+
         if ct['send_incomplete_team'] == True:
             if hero_clicks > 0:
                 if hero_clicks >= ct['send_space_min']:
@@ -265,8 +267,10 @@ def refreshSpaceships(qtd, onlyRefresh = False):
 
     logger('Refresh Spaceship to Fight')
     global count_reloadSpacheship
+    global count_nexList
+            
     buttonsClicked = 1
-    #empty_qtd_spaceships = ct['qtd_spaceships']
+    qtd_spaceships = ct['qtd_spaceships']
     qtd_send_spaceships = ct['qtd_send_spaceships']
 
     cda =  c['click_and_drag_amount']
@@ -309,6 +313,7 @@ def refreshSpaceships(qtd, onlyRefresh = False):
     if hero_clicks == qtd_send_spaceships:
         empty_scrolls_attempts = 0
         count_reloadSpacheship = 0
+        count_nexList = 1
         goToFight()
         checkVictory()
 
@@ -320,8 +325,20 @@ def refreshSpaceships(qtd, onlyRefresh = False):
     else:
         count_reloadSpacheship = count_reloadSpacheship + 1
         logger('Reloading spaceships [{}]!'.format(count_reloadSpacheship))
+        
+        qtd_spaceships = ct['qtd_spaceships']
+        qtd_spaceships = math.ceil(qtd_spaceships/30)
 
-        reloadSpacheship()
+        if count_nexList < qtd_spaceships:
+               reloadSpacheship()
+               time.sleep(1)
+               clickBtn(images['spg-next'])
+               time.sleep(1)
+               count_nexList +=1
+        else:
+           count_nexList = 1
+           reloadSpacheship() 
+
         refreshSpaceships(hero_clicks)
         
 

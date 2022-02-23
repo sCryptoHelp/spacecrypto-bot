@@ -124,7 +124,7 @@
     # [pt_BR]
     # Define o limite de quantas vezes o Bot vai scrollar a tela ate o final em busca de naves. Essa opção só funciona se a "send_incomplete_team" estiver como True
     # Valor padrão: 3
-    qtd_check_reloadSpacheship: 1
+    qtd_check_reloadSpacheship: 2
 
 
     

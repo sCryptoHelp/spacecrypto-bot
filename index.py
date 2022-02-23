@@ -418,7 +418,7 @@ def checkLimitWave():
 
 def checkZeroSpacheship():
     if len(positions(images['spg-surrender'], ct['commom'])) > 0:
-        if len(positions(images['0-15'], 0.95)) > 0:
+        if len(positions(images['0-15'], ct['commom_position'])) > 0:
             logger("Spaceships zeradas, tentando reiniciar...")
             time.sleep(2)
             endFight(True)
@@ -440,6 +440,7 @@ def main():
     t = c['time_intervals']
 
     last = {
+        "CheckLogin" : 0,
         "lessPosition":[],
         "CheckInitialPage" : 0,
         "CheckInicialCube" : 0,
@@ -450,12 +451,16 @@ def main():
     while True:
         now = time.time()
 
-        if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
-            processLogin() 
-        else:
-            if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
-                removeSpaceships()
-                refreshSpaceships(0)
+        if now - last["CheckLogin"] > addRandomness(ct['check_initial_page']):
+            logger('Checking if game has disconnected.')
+            sys.stdout.flush()
+            last["CheckLogin"] = now
+            if len(positions(images['spg-connect-wallet'])) > 0:
+                processLogin()
+            else:
+                if len(positions(images['spg-go-to-boss'], threshold=ct['base_position'])) > 0:
+                    removeSpaceships()
+                    refreshSpaceships(0)
 
         if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
             time.sleep(2) 
@@ -496,8 +501,7 @@ def main():
                 pass
         else:
             last["CheckBackPage"] = now
-            
-        
+
         checkClose()
 
         if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:

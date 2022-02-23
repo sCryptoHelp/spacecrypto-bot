@@ -199,11 +199,13 @@ def playSPG():
 
 def removeSpaceships():
     time.sleep(2)   
+    global bot_working
 
     while True: 
         buttons = positions(images['spg-x'], threshold=ct['remove_to_work_btn'])
         
         if len(buttons) > 0:
+            bot_working = True
 
             # Havia criado com objetivo de clicar nos X de baixo para cima
             # e para conseguir fazer isso eu havia criado um while para posicionar os index ao contrario. 

@@ -2,6 +2,8 @@
 ## _Proporcionando Boas Noites de sono 😴_
 ## Se for copiar para divulgar coloque nosso link nos créditos. 😉
 
+📢 ⚠️ Criei um formulario no Google para com ajuda de TODOS criar um repositorio com a imagens utilizadas pelo Bot na maior quantidade de resolucoes possivel. Link: https://forms.gle/SYWpwmFjsczQqRfJ8, conto sua a Ajuda! 🤝🏼👊🏼
+
 ⚙️ Atualizações 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/releases
 
 🤔 Dúvidas Frequentes 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/wiki/D%C3%BAvidas-Frequentes
@@ -9,6 +11,7 @@
 📽️ Assista ao Vivo 👉🏻 https://www.twitch.tv/jacksonlizier?sr=a
 
 💡 Sugestões de Melhorias/Report de erros 👉🏻 https://github.com/sCryptoHelp/spacecrypto-bot/issues/new
+
 
 ## 
 Um Bot de código aberto, para que qualquer pessoal possa utilizar e colaborar com updates.

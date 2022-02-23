@@ -526,6 +526,7 @@ def main():
                                 else:
                                     logger("Waiting")
                                     last["lessPosition"] = nowPosition
+                                    bot_working = True
 
                                     if(checkLimitWave() == False):
                                         time.sleep(5) 

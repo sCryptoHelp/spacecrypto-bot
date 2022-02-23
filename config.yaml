@@ -216,7 +216,7 @@
     # [pt_BR]
     # Tempo Esperar Pagina Inicial em Segundos
     # Valor padrão: 60
-    check_initial_page: 60
+    check_initial_page: 30
 
     # [en_US]
     # Time wait after Refresh Page in seconds

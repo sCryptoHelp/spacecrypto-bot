@@ -52,6 +52,7 @@ count_victory = 0
 time_start_bot = time.time()
 count_reloadSpacheship = 0
 count_nexList = 1
+bot_working = False
 
 
 
@@ -355,6 +356,10 @@ def surrenderFight():
 
 def endFight():
     logger("End fight")
+    
+    global bot_working
+    bot_working = True
+    
     time.sleep(3) 
     returnBase()
     time.sleep(15) 
@@ -394,6 +399,7 @@ def processLogin():
 def checkClose():
     if clickBtn(images['spg-close'], name='closeBtn', timeout=1):
         processLogin()
+        return True
         
 def reloadSpacheship():
     if len(positions(images['spg-base'], threshold=ct['commom_position'])) > 0 and len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
@@ -446,7 +452,6 @@ def CheckTimeRestartGame():
     
     return False
 
-
 def main():
     time.sleep(5)
     t = c['time_intervals']
@@ -456,60 +461,38 @@ def main():
         "lessPosition":[],
         "CheckInitialPage":0,
         "CheckInicialCube":0,
-        "CheckBackPage":0,
+        "CheckBotWork":0,
     }
 
     while True:
+        global bot_working
+        bot_working = False
+
         now = time.time()
-    
+        
         if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
             processLogin() 
         else:
             if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
                 removeSpaceships()
                 refreshSpaceships(0)
+                bot_working = True
 
         if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
             time.sleep(2) 
             endFight()
+            bot_working = True
 
-        checkVictory()
+        if(checkVictory()):
+            bot_working = True
 
         if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
             time.sleep(ct['check_processing_time']) 
             if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                 refreshPage()
                 
-        if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
-            if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
-                refreshPage()
-            else:
-                last["CheckInitialPage"] = now
-                pass
-        else:
-            last["CheckInitialPage"] = now
-            
-        if len(positions(images['spg-cube'], threshold=ct['commom_position'])) > 0:
-            if now - last["CheckInicialCube"] > addRandomness(ct['check_initial_cube']*60):
-                refreshPage()
-            else:
-                last["CheckInicialCube"] = now
-                pass
-        else:
-            last["CheckInicialCube"] = now
-            
-
-        if len(positions(images['spg-back'], threshold=ct['commom_position'])) > 0:
-            if now - last["CheckBackPage"] > addRandomness(ct['check_erro']*60):
-                refreshPage()
-            else:
-                last["CheckBackPage"] = now
-                pass
-        else:
-            last["CheckBackPage"] = now
-            
-        
-        checkClose()
+        if(checkClose()):
+            bot_working = True
 
         if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
 
@@ -546,12 +529,22 @@ def main():
 
                                     if(checkLimitWave() == False):
                                         time.sleep(5) 
-
+                else:
+                    bot_working = True
 
                 if len(nowPosition) == 0:
                     last["checkBossTime"] = now
 
-        CheckTimeRestartGame()
+        if(CheckTimeRestartGame()):
+            bot_working = True
+
+        if bot_working == False:
+            logger('Bot is not performing any action.')
+            if now - last["CheckBotWork"] > addRandomness(ct['Check_Bot_Work']*60):
+                logger('Bot is not performing any action. The Game will be restarted.')
+                refreshPage()
+        else:
+            last["CheckBotWork"] = now
 main()
 
 

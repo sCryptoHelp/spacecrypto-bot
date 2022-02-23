@@ -127,7 +127,14 @@
     qtd_check_reloadSpacheship: 3
 
 
-    
+    # [en_US]
+    # Time the Bot can take no action. After this time the bot restarts the game
+    # Default value: 5
+    #
+    # [pt_BR]
+    # Tempo que o Bot pode ficar sem executar nenhuma ação. Após esse tempo o bot reinicia o Jogo
+    # Valor padrão: 5
+    Check_Bot_Work: 5
 
     # ============================================================ #
     # [en_US] End - Edit this area according to your account configuration
@@ -210,15 +217,6 @@
     check_boss: 6
 
     # [en_US]
-    # Time wait Initial Page in seconds
-    # Default value: 60
-    #
-    # [pt_BR]
-    # Tempo Esperar Pagina Inicial em Segundos
-    # Valor padrão: 60
-    check_initial_page: 60
-
-    # [en_US]
     # Time wait after Refresh Page in seconds
     # Default value: 30
     #
@@ -226,24 +224,6 @@
     # Tempo Esperar depois de Reiniciar a Pagina em Segundos
     # Valor padrão: 30
     timeW_after_refreshPage: 30
-
-    # [en_US]
-    # Time wait Initial Page in minutes
-    # Default value: 2
-    #
-    # [pt_BR]
-    # Tempo Esperar Pagina Inicial em Minutos
-    # Valor padrão: 2
-    check_initial_cube: 2
-
-    # [en_US]
-    # Time wait Erro
-    # Default value: 2
-    #
-    # [pt_BR]
-    # Tempo Esperar Erro
-    # Valor padrão: 2
-    check_erro: 2
 
     # [en_US]
     # Time wait Fight

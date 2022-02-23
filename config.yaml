@@ -42,21 +42,21 @@
 
     # [en_US]
     # Wave Limitation - If you want to limit the Wave, change the setting to "True"
-    # Default value: False
+    # Default value: True
     #
     # [pt_BR]
     # Limitação de Wave - Caso deseje limitar as Wave, mude a configuração para "True"
-    # Valor padrão: False
-    limit_wave: False  
+    # Valor padrão: True
+    limit_wave: True  
 
     # [en_US]
     # Wave Limitation - Enter here the amount of Wave the Bot should play
-    # Default value: 10
+    # Default value: 6
     #
     # [pt_BR]
     # Limitação de Wave - Informe aqui a quantidade de Wave que o Bot deve jogar
-    # Valor padrão: 10
-    qtd_limit_wave: 10
+    # Valor padrão: 6
+    qtd_limit_wave: 6
 
     # [en_US]
     # Define here if at the end of the Wave Limit the bot should end the fight and reload the ships or just Surrender or two Actions.
@@ -129,12 +129,12 @@
 
     # [en_US]
     # Time the Bot can take no action. After this time the bot restarts the game
-    # Default value: 5
+    # Default value: 10
     #
     # [pt_BR]
     # Tempo que o Bot pode ficar sem executar nenhuma ação. Após esse tempo o bot reinicia o Jogo
-    # Valor padrão: 5
-    Check_Bot_Work: 5
+    # Valor padrão: 10
+    Check_Bot_Work: 10
 
     # ============================================================ #
     # [en_US] End - Edit this area according to your account configuration

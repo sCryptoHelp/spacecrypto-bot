@@ -250,6 +250,9 @@ def clickButtonsFight():
         pyautogui.click()
         global hero_clicks
         hero_clicks = hero_clicks + 1
+
+        global bot_working
+        bot_working = False
         
         if hero_clicks >= qtd_send_spaceships:
             logger('Finish Click Hero')
@@ -295,7 +298,9 @@ def refreshSpaceships(qtd):
 
         if(CheckTimeRestartGame()):
             break
-
+        
+        if(checkClose()):
+            break
 
         buttonsClicked = clickButtonsFight()
         

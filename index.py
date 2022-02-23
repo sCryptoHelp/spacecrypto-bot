@@ -8,7 +8,6 @@ from os import listdir
 from src.logger import logger, loggerMapClicked
 from random import randint
 from random import random
-import pygetwindow
 import numpy as np
 import mss
 import pyautogui
@@ -349,7 +348,7 @@ def goToFight():
 def surrenderFight():
     if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
         clickBtn(images['spg-surrender'])
-        time.sleep(1.5)
+        time.sleep(0.8)
         clickBtn(images['spg-confirm-surrender'])
         global count_victory
         count_victory = 0
@@ -453,113 +452,106 @@ def main():
     t = c['time_intervals']
     
 
-    windows = []
-
-    for w in pygetwindow.getWindowsWithTitle('spacecrypto'):
-        windows.append({
-            "window": w,
-            "lessPosition":[],
-            "CheckInitialPage":0,
-            "CheckInicialCube":0,
-            "CheckBackPage":0,
-            
-            })
+    last = {
+        "lessPosition":[],
+        "CheckInitialPage":0,
+        "CheckInicialCube":0,
+        "CheckBackPage":0,
+    }
 
     while True:
         now = time.time()
-                        
-        for last in windows:
     
-            if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
-                processLogin() 
-            else:
-                if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
-                    removeSpaceships()
-                    refreshSpaceships(0)
+        if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
+            processLogin() 
+        else:
+            if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
+                removeSpaceships()
+                refreshSpaceships(0)
 
-            if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
-                time.sleep(2) 
-                endFight()
+        if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
+            time.sleep(2) 
+            endFight()
 
-            checkVictory()
+        checkVictory()
 
+        if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
+            time.sleep(ct['check_processing_time']) 
             if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-                time.sleep(ct['check_processing_time']) 
-                if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-                    refreshPage()
+                refreshPage()
                 
-            if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
-                if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
-                    refreshPage()
-                else:
-                    last["CheckInitialPage"] = now
-                    pass
+        if len(positions(images['spg-initial-pg'], threshold=ct['commom_position'])) > 0:
+            if now - last["CheckInitialPage"] > addRandomness(ct['check_initial_page']):
+                refreshPage()
             else:
                 last["CheckInitialPage"] = now
+                pass
+        else:
+            last["CheckInitialPage"] = now
             
-            if len(positions(images['spg-cube'], threshold=ct['commom_position'])) > 0:
-                if now - last["CheckInicialCube"] > addRandomness(ct['check_initial_cube']*60):
-                    refreshPage()
-                else:
-                    last["CheckInicialCube"] = now
-                    pass
+        if len(positions(images['spg-cube'], threshold=ct['commom_position'])) > 0:
+            if now - last["CheckInicialCube"] > addRandomness(ct['check_initial_cube']*60):
+                refreshPage()
             else:
                 last["CheckInicialCube"] = now
+                pass
+        else:
+            last["CheckInicialCube"] = now
             
 
-            if len(positions(images['spg-back'], threshold=ct['commom_position'])) > 0:
-                if now - last["CheckBackPage"] > addRandomness(ct['check_erro']*60):
-                    refreshPage()
-                else:
-                    last["CheckBackPage"] = now
-                    pass
+        if len(positions(images['spg-back'], threshold=ct['commom_position'])) > 0:
+            if now - last["CheckBackPage"] > addRandomness(ct['check_erro']*60):
+                refreshPage()
             else:
                 last["CheckBackPage"] = now
+                pass
+        else:
+            last["CheckBackPage"] = now
             
         
-            checkClose()
+        checkClose()
 
-            if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
+        if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:
 
-                cont = ct['check_boss']
+            cont = ct['check_boss']
                                 
-                while(cont >0):
-                    cont = cont-1
-                    nowPosition = lifeBoss()
-                    if(checkLimitWave() == False):
+            while(cont >0):
+                cont = cont-1
+                nowPosition = lifeBoss()
+                if(checkLimitWave() == False):
                     
-                        if len(last["lessPosition"]) == 0:
-                            if len(nowPosition) > 0:
-                                last["lessPosition"] = nowPosition
-                                logger("Starting position")
+                    if len(last["lessPosition"]) == 0:
+                        if len(nowPosition) > 0:
+                            last["lessPosition"] = nowPosition
+                            logger("Starting position")
                                                         
+                    else:
+                        if np.array_equal(nowPosition,last["lessPosition"]) == False:
+                            last["lessPosition"] = nowPosition
+                            logger("Updating position")
+                            break
                         else:
-                            if np.array_equal(nowPosition,last["lessPosition"]) == False:
-                                last["lessPosition"] = nowPosition
-                                logger("Updating position")
+                            if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
+                                time.sleep(2) 
+                                endFight()
                                 break
                             else:
-                                if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
-                                    time.sleep(2) 
+                                if cont == 0:
+                                    logger("End time wait")
                                     endFight()
                                     break
                                 else:
-                                    if cont == 0:
-                                        logger("End time wait")
-                                        endFight()
-                                        break
-                                    else:
-                                        logger("Waiting")
-                                        last["lessPosition"] = nowPosition
+                                    logger("Waiting")
+                                    last["lessPosition"] = nowPosition
 
-                                        if(checkLimitWave() == False):
-                                            time.sleep(5) 
+                                    if(checkLimitWave() == False):
+                                        time.sleep(5) 
 
 
-                    if len(nowPosition) == 0:
-                        last["checkBossTime"] = now
+                if len(nowPosition) == 0:
+                    last["checkBossTime"] = now
 
-            CheckTimeRestartGame()
+        CheckTimeRestartGame()
 main()
 
 

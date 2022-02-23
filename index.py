@@ -252,7 +252,7 @@ def clickButtonsFight():
         hero_clicks = hero_clicks + 1
 
         global bot_working
-        bot_working = False
+        bot_working = True
         
         if hero_clicks >= qtd_send_spaceships:
             logger('Finish Click Hero')

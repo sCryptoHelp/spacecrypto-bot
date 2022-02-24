@@ -113,6 +113,7 @@ def clickBtn(img,name=None, timeout=3, threshold = ct['default']):
 
         moveToWithRandomness(pos_click_x,pos_click_y,1)
         pyautogui.click()
+        
         return True
 
 def printSreen():
@@ -153,7 +154,22 @@ def scroll(clickAndDragAmount):
     pyautogui.dragRel(0,clickAndDragAmount,duration=1, button='left')
 
 def refreshPage():
-    pyautogui.hotkey('ctrl','f5')
+    if(ct['type_refresh']) == 'ctrl+f5':
+        pyautogui.hotkey('ctrl','f5')
+    else:
+        if(ct['type_refresh']) == 'shift+f5':
+            pyautogui.hotkey('shift','f5')
+        else:
+            if(ct['type_refresh']) == 'ctrl+shift+r':
+                pyautogui.hotkey('ctrl','shift','r')
+            else:
+                if(ct['type_refresh']) == 'Todos':
+                    pyautogui.hotkey('ctrl','f5')
+                    time.sleep(1.5)
+                    pyautogui.hotkey('shift','f5')
+                    time.sleep(1.5)
+                    pyautogui.hotkey('ctrl','shift','r')
+
     time.sleep(ct['timeW_after_refreshPage']) 
     processLogin()
 

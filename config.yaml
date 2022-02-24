@@ -136,6 +136,20 @@
     # Valor padrão: 10
     Check_Bot_Work: 10
 
+    # [en_US]
+    # Type Refresh page
+    # Options: 'ctrl+f5' 
+    #          'shift+f5' 
+    #          'ctrl+shift+r' 
+    #          'Todos'
+    # [pt_BR]
+    # Tipo de Atualização da pagina
+    # Opçõces: 'ctrl+f5' 
+    #          'shift+f5' 
+    #          'ctrl+shift+r' 
+    #          'Todos'
+    type_refresh: 'Todos'
+
     # ============================================================ #
     # [en_US] End - Edit this area according to your account configuration
     #

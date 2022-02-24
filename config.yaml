@@ -3,13 +3,15 @@
   # [en_US] Time intervals configuration
   #
   time_intervals:
-    
     # [en_US] Time interval between moviments
     # Default value (in seconds): 1 
     #
     # [pt_BR] Intervalo de tempo entre movimentos
     # Valor padrão (em segundos): 1
-    interval_between_moviments: 1
+    interval_between_moviments: 0.05
+
+    # Velocidade de locomoção do mouse (padrão 0.1)
+    move_speed_mouse: 0.1
 
   # [en_US] How confident the bot needs to be to click the buttons (values from 0 to 1. 0 is the minimum value, 1 is the maximum value)
   #

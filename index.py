@@ -3,8 +3,8 @@ from ast import Return
 from cv2 import cv2
 
 from os import listdir
-from src.logger import logger, loggerMapClicked
-from random import randint
+
+from src.logger import logger
 from random import random
 import numpy as np
 import mss
@@ -38,8 +38,9 @@ if __name__ == '__main__':
 
 ct = c['threshold']
 ch = c['home']
+ti = c['time_intervals']
 
-pause = c['time_intervals']['interval_between_moviments']
+pause = ti['interval_between_moviments']
 pyautogui.PAUSE = pause
 
 pyautogui.FAILSAFE = False
@@ -108,7 +109,7 @@ def clickBtn(img,name=None, timeout=3, threshold = ct['default']):
         pos_click_x = x+w/2
         pos_click_y = y+h/2
 
-        moveToWithRandomness(pos_click_x,pos_click_y,0.7)
+        moveToWithRandomness(pos_click_x,pos_click_y,ti['move_speed_mouse'])
         pyautogui.click()
         return True
 
@@ -145,7 +146,7 @@ def scroll(clickAndDragAmount):
         return
     x,y,w,h = flagScroll[len(flagScroll)-1]
 
-    moveToWithRandomness(x,y,1)
+    moveToWithRandomness(x,y,ti['move_speed_mouse'])
 
     pyautogui.dragRel(0,clickAndDragAmount,duration=1, button='left')
 
@@ -216,7 +217,7 @@ def removeSpaceships():
             #    pyautogui.click()
 
             for (x, y, w, h) in reversed(buttons):
-                moveToWithRandomness(x+(w/2),y+(h/2),1)
+                moveToWithRandomness(x+(w/2),y+(h/2),ti['move_speed_mouse'])
                 pyautogui.click()
 
         if len(buttons) == 0:
@@ -243,7 +244,7 @@ def clickButtonsFight():
     
 
     for (x, y, w, h) in reversed(buttons): #Adjust for click button a little more intelligent 
-        moveToWithRandomness(x+ajustX+(w/2),y+ajustY+(h/2),1)
+        moveToWithRandomness(x+ajustX+(w/2),y+ajustY+(h/2),ti['move_speed_mouse'])
         pyautogui.click()
         global hero_clicks
         hero_clicks = hero_clicks + 1
@@ -300,14 +301,18 @@ def refreshSpaceships(qtd, onlyRefresh = False):
         if buttonsClicked == 0:
             empty_scrolls_attempts = empty_scrolls_attempts - 1
             scroll(-cda)
+        elif buttonsClicked == -1:
+            empty_scrolls_attempts = 0   
         else:
-            if buttonsClicked == -1:
-                empty_scrolls_attempts = 0   
-            else:
-                if buttonsClicked > 0:
-                    empty_scrolls_attempts = empty_scrolls_attempts + 1
+            if buttonsClicked > 0:
+                time.sleep(0.1)
+                continue
+                #empty_scrolls_attempts = empty_scrolls_attempts + 1
 
-        time.sleep(2)
+        if checkClose():
+            break
+
+        time.sleep(1.5)
         logger('💪 {} Spaceships sent to Fight'.format(hero_clicks))
 
     if hero_clicks == qtd_send_spaceships:
@@ -394,8 +399,11 @@ def processLogin():
     playSPG()
 
 def checkClose():
-    if clickBtn(images['spg-close'], name='closeBtn', timeout=1):
-        processLogin()
+    if len(positions(images['spg-close'])) > 0:
+        if clickBtn(images['spg-close'], name='closeBtn', timeout=1):
+            refreshPage()
+            return True
+    return False
         
 def reloadSpacheship():
     if len(positions(images['spg-base'], threshold=ct['commom_position'])) > 0 and len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:

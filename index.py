@@ -499,14 +499,14 @@ def CheckBotWork():
     global bot_working
     global last
     now = time.time()
-
+    
     if bot_working == False:
         logger('Bot is not performing any action.')
         if now - last["CheckBotWork"] > addRandomness(ct['Check_Bot_Work']*60):
             logger('Bot is not performing any action. The Game will be restarted.')
             refreshPage()
-        else:
-            last["CheckBotWork"] = now
+    else:
+        last["CheckBotWork"] = now
 
 
 def main():

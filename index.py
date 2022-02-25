@@ -72,7 +72,6 @@ def addRandomness(n, randomn_factor_size=None):
 def moveToWithRandomness(x,y,t):
     pyautogui.moveTo(addRandomness(x,10),addRandomness(y,10),t+random()/2)
 
-
 def remove_suffix(input_string, suffix):
     if suffix and input_string.endswith(suffix):
         return input_string[:-len(suffix)]
@@ -88,7 +87,6 @@ def load_images():
     return targets
 
 images = load_images()
-
 
 def clickBtn(img,name=None, timeout=3, threshold = ct['default']):
     logger(None, progress_indicator=True)
@@ -111,7 +109,7 @@ def clickBtn(img,name=None, timeout=3, threshold = ct['default']):
         pos_click_x = x+w/2
         pos_click_y = y+h/2
 
-        moveToWithRandomness(pos_click_x,pos_click_y,1)
+        moveToWithRandomness(pos_click_x,pos_click_y,ct['mouse_speed'])
         pyautogui.click()
         
         return True
@@ -149,7 +147,7 @@ def scroll(clickAndDragAmount):
         return
     x,y,w,h = flagScroll[len(flagScroll)-1]
 
-    moveToWithRandomness(x,y,1)
+    moveToWithRandomness(x,y,ct['mouse_speed'])
 
     pyautogui.dragRel(0,clickAndDragAmount,duration=1, button='left')
 
@@ -167,8 +165,6 @@ def refreshPage():
                     pyautogui.hotkey('ctrl','f5')
                     time.sleep(1.5)
                     pyautogui.hotkey('shift','f5')
-                    time.sleep(1.5)
-                    pyautogui.hotkey('ctrl','shift','r')
 
     time.sleep(ct['timeW_after_refreshPage']) 
     processLogin()
@@ -237,7 +233,7 @@ def removeSpaceships():
             #    pyautogui.click()
 
             for (x, y, w, h) in reversed(buttons):
-                moveToWithRandomness(x+(w/2),y+(h/2),1)
+                moveToWithRandomness(x+(w/2),y+(h/2),ct['mouse_speed'])
                 pyautogui.click()
 
         if len(buttons) == 0:
@@ -264,7 +260,7 @@ def clickButtonsFight():
     
 
     for (x, y, w, h) in reversed(buttons): #Adjust for click button a little more intelligent 
-        moveToWithRandomness(x+ajustX+(w/2),y+ajustY+(h/2),1)
+        moveToWithRandomness(x+ajustX+(w/2),y+ajustY+(h/2),ct['mouse_speed'])
         pyautogui.click()
         global hero_clicks
         hero_clicks = hero_clicks + 1
@@ -363,7 +359,6 @@ def refreshSpaceships(qtd):
 
         refreshSpaceships(hero_clicks)
         
-
 def goToFight():
     clickBtn(images['spg-go-to-boss'])
     time.sleep(1)
@@ -396,7 +391,6 @@ def endFight():
         refreshSpaceships(0)
     else:
         refreshPage()
-
 
 def returnBase():
     goToSpaceShips()
@@ -475,6 +469,25 @@ def CheckTimeRestartGame():
     
     return False
 
+def connectWallet():
+    if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
+        return True
+
+def checkHome():
+    if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
+        return True
+
+def clickConfirm():
+    if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
+        return True
+
+def checkProcessing():
+    if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
+           time.sleep(ct['check_processing_time']) 
+           if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
+               return True
+
+
 def main():
     time.sleep(5)
     t = c['time_intervals']
@@ -493,28 +506,28 @@ def main():
 
         now = time.time()
         
-        if clickBtn(images['spg-connect-wallet'], name='conectBtn', timeout=5):
+        if (connectWallet()):
+            bot_working = True
             processLogin() 
         else:
-            if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
+            if (checkHome()):
+                bot_working = True
                 removeSpaceships()
                 refreshSpaceships(0)
-                bot_working = True
 
-        if clickBtn(images['spg-confirm'], name='okBtn', timeout=3):
+        if (clickConfirm()):
+            bot_working = True
             time.sleep(2) 
             endFight()
+            
+        if (checkVictory()):
             bot_working = True
 
-        if(checkVictory()):
+        if (checkProcessing()):
             bot_working = True
-
-        if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-            time.sleep(ct['check_processing_time']) 
-            if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
-                refreshPage()
+            refreshPage()
                 
-        if(checkClose()):
+        if (checkClose()):
             bot_working = True
 
         if len(positions(images['spg-surrender'], threshold=ct['end_boss'])  ) > 0:

@@ -140,15 +140,23 @@
     # Type Refresh page
     # Options: 'ctrl+f5' 
     #          'shift+f5' 
-    #          'ctrl+shift+r' 
     #          'Todos'
     # [pt_BR]
     # Tipo de Atualização da pagina
     # Opçõces: 'ctrl+f5' 
     #          'shift+f5' 
-    #          'ctrl+shift+r' 
     #          'Todos'
-    type_refresh: 'shift+f5'
+    type_refresh: 'Todos'
+
+    # [en_US]
+    # Mouse Speed
+    # Default value: 0.1
+    #
+    # [pt_BR]
+    # Velocidade do Mouse
+    # Valor padrão: 0.1
+    #
+    mouse_speed: 0.1
 
     # ============================================================ #
     # [en_US] End - Edit this area according to your account configuration

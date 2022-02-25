@@ -54,6 +54,13 @@ count_reloadSpacheship = 0
 count_nexList = 1
 bot_working = False
 
+last = {
+        "lessPosition":[],
+        "CheckInitialPage":0,
+        "CheckInicialCube":0,
+        "CheckBotWork":0,
+    }
+
 
 
 def addRandomness(n, randomn_factor_size=None):
@@ -317,7 +324,8 @@ def refreshSpaceships(qtd):
             break
 
         buttonsClicked = clickButtonsFight()
-        
+        CheckBotWork()
+
         if buttonsClicked == 0:
             empty_scrolls_attempts = empty_scrolls_attempts - 1
             scroll(-cda)
@@ -487,18 +495,33 @@ def checkProcessing():
            if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                return True
 
+def CheckBotWork():
+    global bot_working
+    global last
+    now = time.time()
+
+    if bot_working == False:
+        logger('Bot is not performing any action.')
+        if now - last["CheckBotWork"] > addRandomness(ct['Check_Bot_Work']*60):
+            logger('Bot is not performing any action. The Game will be restarted.')
+            refreshPage()
+        else:
+            last["CheckBotWork"] = now
+
 
 def main():
     time.sleep(5)
     t = c['time_intervals']
     
-
+    global last
     last = {
         "lessPosition":[],
         "CheckInitialPage":0,
         "CheckInicialCube":0,
         "CheckBotWork":0,
     }
+
+    last["CheckBotWork"] = time.time()
 
     while True:
         global bot_working
@@ -575,13 +598,7 @@ def main():
         if(CheckTimeRestartGame()):
             bot_working = True
 
-        if bot_working == False:
-            logger('Bot is not performing any action.')
-            if now - last["CheckBotWork"] > addRandomness(ct['Check_Bot_Work']*60):
-                logger('Bot is not performing any action. The Game will be restarted.')
-                refreshPage()
-        else:
-            last["CheckBotWork"] = now
+        CheckBotWork()
 main()
 
 

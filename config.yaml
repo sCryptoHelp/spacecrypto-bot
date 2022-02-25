@@ -148,7 +148,7 @@
     #          'shift+f5' 
     #          'ctrl+shift+r' 
     #          'Todos'
-    type_refresh: 'Todos'
+    type_refresh: 'shift+f5'
 
     # ============================================================ #
     # [en_US] End - Edit this area according to your account configuration

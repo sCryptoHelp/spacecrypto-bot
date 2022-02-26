@@ -172,6 +172,8 @@ def refreshPage():
                     pyautogui.hotkey('ctrl','f5')
                     time.sleep(1.5)
                     pyautogui.hotkey('shift','f5')
+                    time.sleep(1.5)
+                    pyautogui.hotkey('ctrl','shift','r')
 
     time.sleep(ct['timeW_after_refreshPage']) 
     processLogin()
@@ -221,32 +223,36 @@ def removeSpaceships():
     global bot_working
 
     while True: 
-        buttons = positions(images['spg-x'], threshold=ct['remove_to_work_btn'])
-        
-        if len(buttons) > 0:
-            bot_working = True
-
-            # Havia criado com objetivo de clicar nos X de baixo para cima
-            # e para conseguir fazer isso eu havia criado um while para posicionar os index ao contrario. 
-            # \o/ porem descobri o "reversed" que faz isso certinho.
-            
-            # index = len(buttons)
-            # while index > 0:
-            #     index -= 1
-            #     buttonsNewOrder.append(buttons[index])
-
-            # for (x, y, w, h) in buttonsNewOrder:
-            #     moveToWithRandomness(x+(w/2),y+(h/2),1)
-            #    pyautogui.click()
-
-            for (x, y, w, h) in reversed(buttons):
-                moveToWithRandomness(x+(w/2),y+(h/2),ct['mouse_speed'])
-                pyautogui.click()
-
-        if len(buttons) == 0:
-            break
-
         if(CheckTimeRestartGame()):
+                break
+
+        if(checkHome()):
+            buttons = positions(images['spg-x'], threshold=ct['remove_to_work_btn'])
+        
+            if len(buttons) > 0:
+                bot_working = True
+
+                # Havia criado com objetivo de clicar nos X de baixo para cima
+                # e para conseguir fazer isso eu havia criado um while para posicionar os index ao contrario. 
+                # \o/ porem descobri o "reversed" que faz isso certinho.
+            
+                # index = len(buttons)
+                # while index > 0:
+                #     index -= 1
+                #     buttonsNewOrder.append(buttons[index])
+
+                # for (x, y, w, h) in buttonsNewOrder:
+                #     moveToWithRandomness(x+(w/2),y+(h/2),1)
+                #    pyautogui.click()
+
+                for (x, y, w, h) in reversed(buttons):
+                    moveToWithRandomness(x+(w/2),y+(h/2),ct['mouse_speed'])
+                    pyautogui.click()
+
+            if len(buttons) == 0:
+                break
+
+        else:
             break
        
 def clickButtonsFight():
@@ -283,7 +289,7 @@ def clickButtonsFight():
             if hero_clicks > 0:
                 if hero_clicks >= ct['send_space_min']:
                     if count_reloadSpacheship >= ct['qtd_check_reloadSpacheship']:
-                        logger('Enviando time mesmo incompleto')
+                        logger('Send incomplet team')
                         hero_clicks = qtd_send_spaceships 
                         return -1
 
@@ -306,7 +312,11 @@ def refreshSpaceships(qtd):
 
     empty_scrolls_attempts = qtd_send_spaceships 
       
-    checkClose()
+    if(checkClose()):
+        return False
+    
+    if(CheckTimeRestartGame()):
+        return False
 
     if qtd > 0:
         hero_clicks = qtd
@@ -323,21 +333,24 @@ def refreshSpaceships(qtd):
         if(checkClose()):
             break
 
-        buttonsClicked = clickButtonsFight()
-        CheckBotWork()
+        if(checkHome()):
+            buttonsClicked = clickButtonsFight()
+            CheckBotWork()
 
-        if buttonsClicked == 0:
-            empty_scrolls_attempts = empty_scrolls_attempts - 1
-            scroll(-cda)
-        else:
-            if buttonsClicked == -1:
-                empty_scrolls_attempts = 0   
+            if buttonsClicked == 0:
+                empty_scrolls_attempts = empty_scrolls_attempts - 1
+                scroll(-cda)
             else:
-                if buttonsClicked > 0:
-                    empty_scrolls_attempts = empty_scrolls_attempts + 1
+                if buttonsClicked == -1:
+                    empty_scrolls_attempts = 0   
+                else:
+                    if buttonsClicked > 0:
+                        empty_scrolls_attempts = empty_scrolls_attempts + 1
 
-        time.sleep(2)
-        logger('💪 {} Spaceships sent to Fight'.format(hero_clicks))
+            time.sleep(2)
+            logger('💪 {} Spaceships sent to Fight'.format(hero_clicks))
+        else:
+            break
 
     if hero_clicks == qtd_send_spaceships:
         empty_scrolls_attempts = 0
@@ -393,7 +406,7 @@ def endFight():
     if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
         time.sleep(ct['check_processing_time']) 
 
-    if len(positions(images['spg-go-to-boss'], threshold=ct['base_position']))  > 0:
+    if (checkHome()):
         removeSpaceships()
         time.sleep(1) 
         refreshSpaceships(0)

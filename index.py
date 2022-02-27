@@ -1,5 +1,6 @@
 # -*- coding: utf-8 - Lizier -*-    
 from ast import Return
+from pickle import TRUE
 from cv2 import cv2
 
 from captcha.solveCaptcha import solveCaptcha
@@ -220,8 +221,7 @@ def playSPG():
 
 def removeSpaceships():
     time.sleep(2)   
-    global bot_working
-
+    
     while True: 
         if(CheckTimeRestartGame()):
             break
@@ -229,12 +229,14 @@ def removeSpaceships():
         if(checkClose()):
             break
 
+        if(CheckBotWork() == False):
+            break
+
         if(checkHome()):
             buttons = positions(images['spg-x'], threshold=ct['remove_to_work_btn'])
         
             if len(buttons) > 0:
-                bot_working = True
-
+                
                 # Havia criado com objetivo de clicar nos X de baixo para cima
                 # e para conseguir fazer isso eu havia criado um while para posicionar os index ao contrario. 
                 # \o/ porem descobri o "reversed" que faz isso certinho.
@@ -249,8 +251,20 @@ def removeSpaceships():
                 #    pyautogui.click()
 
                 for (x, y, w, h) in reversed(buttons):
-                    moveToWithRandomness(x+(w/2),y+(h/2),ct['mouse_speed'])
-                    pyautogui.click()
+                    if (restrictArea(x=x,y=y) == False):
+                        moveToWithRandomness(x+(w/2),y+(h/2),ct['mouse_speed'])
+                        pyautogui.click()
+
+                        if(CheckTimeRestartGame()):
+                            break
+        
+                        if(checkClose()):
+                            break
+
+                        if(CheckBotWork() == False):
+                            break
+                    else:
+                        logger('Click restricted Area Eixo')
 
             if len(buttons) == 0:
                 break
@@ -273,28 +287,31 @@ def clickButtonsFight():
         ajustY = 0
 
     qtd_send_spaceships = ct['qtd_send_spaceships']
-    
 
-    for (x, y, w, h) in reversed(buttons): #Adjust for click button a little more intelligent 
-        moveToWithRandomness(x+ajustX+(w/2),y+ajustY+(h/2),ct['mouse_speed'])
-        pyautogui.click()
-        global hero_clicks
-        hero_clicks = hero_clicks + 1
+    for (x, y, w, h) in reversed(buttons): #Adjust for click button a little more intelligent
 
-        global bot_working
-        bot_working = True
+        tx = x+ajustX
+        ty = y+ajustY
+
+        if restrictArea(x=tx,y=ty) == False:
+            moveToWithRandomness(tx+(w/2),ty+(h/2),ct['mouse_speed'])
+            pyautogui.click()
+            global hero_clicks
+            hero_clicks = hero_clicks + 1
         
-        if hero_clicks >= qtd_send_spaceships:
-            logger('Finish Click Hero')
-            return -1
+            if hero_clicks >= qtd_send_spaceships:
+                logger('Finish Click Hero')
+                return -1
         
-        if(ct['send_incomplete_team']):
-            if hero_clicks > 0:
-                if hero_clicks >= ct['send_space_min']:
-                    if count_reloadSpacheship >= ct['qtd_check_reloadSpacheship']:
-                        logger('Send incomplet team')
-                        hero_clicks = qtd_send_spaceships 
-                        return -1
+            if(ct['send_incomplete_team']):
+                if hero_clicks > 0:
+                    if hero_clicks >= ct['send_space_min']:
+                        if count_reloadSpacheship >= ct['qtd_check_reloadSpacheship']:
+                            logger('Send incomplet team')
+                            hero_clicks = qtd_send_spaceships 
+                            return -1
+        else:
+             logger('Click restricted Area')
 
     return len(buttons)
 
@@ -338,7 +355,9 @@ def refreshSpaceships(qtd):
 
         if(checkHome()):
             buttonsClicked = clickButtonsFight()
-            CheckBotWork()
+
+            if(CheckBotWork() == False):
+                break
 
             if buttonsClicked == 0:
                 empty_scrolls_attempts = empty_scrolls_attempts - 1
@@ -521,8 +540,18 @@ def CheckBotWork():
         if now - last["CheckBotWork"] > addRandomness(ct['Check_Bot_Work']*60):
             logger('Bot is not performing any action. The Game will be restarted.')
             refreshPage()
+            return False
     else:
         last["CheckBotWork"] = now
+        return True
+
+def restrictArea(x,y):
+    if y >= 612:
+        logger('Eixo y {}'.format(y))
+        return True
+    else:
+        return False
+
 
 def main():
     time.sleep(5)

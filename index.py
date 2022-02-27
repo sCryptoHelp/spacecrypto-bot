@@ -317,91 +317,98 @@ def clickButtonsFight():
     return len(buttons)
 
 def refreshSpaceships(qtd):
+    
+    if(checkHome()):
 
-    logger('Refresh Spaceship to Fight')
-    global count_reloadSpacheship
-    global count_nexList
+        logger('Refresh Spaceship to Fight')
+        global count_reloadSpacheship
+        global count_nexList
             
-    buttonsClicked = 1
-    qtd_spaceships = ct['qtd_spaceships']
-    qtd_send_spaceships = ct['qtd_send_spaceships']
+        buttonsClicked = 1
+        qtd_spaceships = ct['qtd_spaceships']
+        qtd_send_spaceships = ct['qtd_send_spaceships']
 
-    cda =  c['click_and_drag_amount']
+        cda =  c['click_and_drag_amount']
     
-    global hero_clicks
-    hero_clicks = 0
+        global hero_clicks
+        hero_clicks = 0
 
-    empty_scrolls_attempts = qtd_send_spaceships 
+        empty_scrolls_attempts = qtd_send_spaceships 
       
-    if(checkClose()):
-        return False
-    
-    if(CheckTimeRestartGame()):
-        return False
-
-    if qtd > 0:
-        hero_clicks = qtd
-        logger('Quantidade ja selecionada {}'.format(hero_clicks))
-        if hero_clicks == qtd_send_spaceships:
-            empty_scrolls_attempts = 0
-            goToFight()
-
-    while(empty_scrolls_attempts >0):
-
-        if(CheckTimeRestartGame()):
-            break
-        
         if(checkClose()):
-            break
+            return False
+    
+        if(CheckTimeRestartGame()):
+            return False
 
-        if(checkHome()):
-            buttonsClicked = clickButtonsFight()
+        if qtd > 0:
+            hero_clicks = qtd
+            logger('Quantidade ja selecionada {}'.format(hero_clicks))
+            if hero_clicks == qtd_send_spaceships:
+                empty_scrolls_attempts = 0
+                goToFight()
 
-            if(CheckBotWork() == False):
+        while(empty_scrolls_attempts >0):
+
+            if(CheckTimeRestartGame()):
+                break
+        
+            if(checkClose()):
                 break
 
-            if buttonsClicked == 0:
-                empty_scrolls_attempts = empty_scrolls_attempts - 1
-                scroll(-cda)
-            else:
-                if buttonsClicked == -1:
-                    empty_scrolls_attempts = 0   
+            if(checkHome()):
+                buttonsClicked = clickButtonsFight()
+
+                if(CheckBotWork() == False):
+                    break
+
+                if buttonsClicked == 0:
+                    empty_scrolls_attempts = empty_scrolls_attempts - 1
+                    scroll(-cda)
                 else:
-                    if buttonsClicked > 0:
-                        empty_scrolls_attempts = empty_scrolls_attempts + 1
+                    if buttonsClicked == -1:
+                        empty_scrolls_attempts = 0   
+                    else:
+                        if buttonsClicked > 0:
+                            empty_scrolls_attempts = empty_scrolls_attempts + 1
 
-            time.sleep(2)
-            logger('💪 {} Spaceships sent to Fight'.format(hero_clicks))
+                time.sleep(2)
+                logger('💪 {} Spaceships sent to Fight'.format(hero_clicks))
+            else:
+                break
+
+        if hero_clicks == qtd_send_spaceships:
+            empty_scrolls_attempts = 0
+            count_reloadSpacheship = 0
+            count_nexList = 1
+            goToFight()
+            checkVictory()
+
+            #Check IF Type is EndFightAndSurrender for to return to first boss
+            if(ct['type_limit_wave'] == 'EndFightAndSurrender'):
+                surrenderFight()
         else:
-            break
-
-    if hero_clicks == qtd_send_spaceships:
-        empty_scrolls_attempts = 0
-        count_reloadSpacheship = 0
-        count_nexList = 1
-        goToFight()
-        checkVictory()
-
-        #Check IF Type is EndFightAndSurrender for to return to first boss
-        if(ct['type_limit_wave'] == 'EndFightAndSurrender'):
-            surrenderFight()
-    else:
-        count_reloadSpacheship +=1
+            count_reloadSpacheship +=1
         
-        qtd_spaceships = ct['qtd_spaceships']
-        qtd_spaceships = math.ceil(qtd_spaceships/30)
+            qtd_spaceships = ct['qtd_spaceships']
+            qtd_spaceships = math.ceil(qtd_spaceships/30)
+        
+            if(checkHome()):
+                if count_nexList < qtd_spaceships:
+                    reloadSpacheship()
+                    time.sleep(1)
+                    clickBtn(images['spg-next'])
+                    time.sleep(1)
+                    count_nexList +=1
+                else:
+                    count_nexList = 1
+                    reloadSpacheship() 
 
-        if count_nexList < qtd_spaceships:
-               reloadSpacheship()
-               time.sleep(1)
-               clickBtn(images['spg-next'])
-               time.sleep(1)
-               count_nexList +=1
-        else:
-           count_nexList = 1
-           reloadSpacheship() 
-
-        refreshSpaceships(hero_clicks)
+                refreshSpaceships(hero_clicks)
+            else:
+                empty_scrolls_attempts = 0
+                count_reloadSpacheship = 0
+                count_nexList = 1
         
 def goToFight():
     clickBtn(images['spg-go-to-boss'])

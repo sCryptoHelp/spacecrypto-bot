@@ -116,9 +116,10 @@ def clickBtn(img,name=None, timeout=3, threshold = ct['default']):
         x,y,w,h = matches[0]
         pos_click_x = x+w/2
         pos_click_y = y+h/2
-
-        moveToWithRandomness(pos_click_x,pos_click_y,ct['mouse_speed'])
-        pyautogui.click()
+        
+        if (restrictArea(x=pos_click_x,y=pos_click_y) == False):
+            moveToWithRandomness(pos_click_x,pos_click_y,ct['mouse_speed'])
+            pyautogui.click()
         
         return True
 

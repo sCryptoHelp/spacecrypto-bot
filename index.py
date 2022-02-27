@@ -224,7 +224,10 @@ def removeSpaceships():
 
     while True: 
         if(CheckTimeRestartGame()):
-                break
+            break
+        
+        if(checkClose()):
+            break
 
         if(checkHome()):
             buttons = positions(images['spg-x'], threshold=ct['remove_to_work_btn'])
@@ -520,7 +523,6 @@ def CheckBotWork():
             refreshPage()
     else:
         last["CheckBotWork"] = now
-
 
 def main():
     time.sleep(5)

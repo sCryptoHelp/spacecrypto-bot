@@ -134,7 +134,7 @@
     # [pt_BR]
     # Tempo que o Bot pode ficar sem executar nenhuma ação. Após esse tempo o bot reinicia o Jogo
     # Valor padrão: 10
-    Check_Bot_Work: 2
+    Check_Bot_Work: 5
 
     # [en_US]
     # Type Refresh page

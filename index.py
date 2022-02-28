@@ -411,6 +411,9 @@ def refreshSpaceships(qtd):
                 count_nexList = 1
         
 def goToFight():
+    logger("Go fight")
+    CheckBotWork(SetWorking=True)
+
     clickBtn(images['spg-go-to-boss'])
     time.sleep(1)
     clickBtn(images['spg-confirm'])
@@ -422,13 +425,12 @@ def surrenderFight():
         clickBtn(images['spg-confirm-surrender'])
         global count_victory
         count_victory = 0
+        CheckBotWork(SetWorking=True)
 
 def endFight():
     logger("End fight")
-    
-    global bot_working
-    bot_working = True
-    
+    CheckBotWork(SetWorking=True)
+
     time.sleep(3) 
     returnBase()
     time.sleep(15) 
@@ -538,10 +540,13 @@ def checkProcessing():
            if len(positions(images['spg-processing'], threshold=ct['commom_position'])) > 0:
                return True
 
-def CheckBotWork():
+def CheckBotWork(SetWorking = False):
     global bot_working
     global last
     now = time.time()
+
+    if SetWorking == True:
+        bot_working = True
     
     if bot_working == False:
         logger('Bot is not performing any action.')

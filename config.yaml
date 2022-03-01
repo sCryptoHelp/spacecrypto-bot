@@ -160,6 +160,16 @@
     #
     mouse_speed: 0.1
 
+    # [en_US]
+    # Auto space Renew
+    # Default value: True
+    #
+    # [pt_BR]
+    # Renovar naves sozinho
+    # Valor padrão: True
+    #
+    auto_renew: True
+
     # ============================================================ #
     # [en_US] End - Edit this area according to your account configuration
     #

@@ -273,6 +273,16 @@ def removeSpaceships():
         else:
             break
        
+def renewSpaces():
+    buttonsRenew = positions(images['spg-taxa-r'], threshold=ct['go_to_work_btn'])
+    for (x, y, w, h) in reversed(buttonsRenew): 
+        if restrictArea(x=x,y=y) == False:
+            moveToWithRandomness(x+(w/2),y+(h/2),ct['mouse_speed'])
+            pyautogui.click()
+            time.sleep(1)
+            clickBtn(images['spg-yes'])
+            time.sleep(1)
+
 def clickButtonsFight():
     
     global count_reloadSpacheship
@@ -286,6 +296,9 @@ def clickButtonsFight():
         buttons = positions(images['spg-go-fight'], threshold=ct['go_to_work_btn'])
         ajustX = 0
         ajustY = 0
+    
+    if(ct['auto_renew'] == True):
+        renewSpaces()
 
     qtd_send_spaceships = ct['qtd_send_spaceships']
 
